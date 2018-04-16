@@ -1,32 +1,36 @@
 -- command to use this file in psql:
--- psql -U raul -d raul -a -f /Users/raul/Documents/Development/React_learning/Microservices/myNodeTest/modules/db/createTables.sql
+-- psql -U raul -d raul -a -f /Users/raul/Documents/Development/React_learning/Microservices/TooManyCooks/modules/db/createTables.sql
+
+set datestyle to DMY, SQL;
 
 DROP TABLE IF EXISTS user_given_ratings;
 DROP TABLE IF EXISTS user_received_ratings;
-DROP TABLE IF EXISTS user_messages
+DROP TABLE IF EXISTS user_messages;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS ratings;
 DROP TABLE IF EXISTS payments;
 DROP TABLE IF EXISTS event_users;
 DROP TABLE IF EXISTS locations;
-DROP TABLE IF EXISTS event_categories;
-DROP TABLE IF EXISTS user_categories;
+DROP TABLE IF EXISTS event_tags;
+DROP TABLE IF EXISTS user_tags;
 DROP TABLE IF EXISTS user_badges;
 DROP TABLE IF EXISTS badges;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS tags;
 
-CREATE TABLE categories (
+CREATE TABLE tags (
   id SERIAL PRIMARY KEY,
   title VARCHAR(40)
 );
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  firstName VARCHAR(30),
-  lastName VARCHAR(30),
-  email VARCHAR(50)
+  first_name VARCHAR(30),
+  last_name VARCHAR(30),
+  email VARCHAR(50) UNIQUE,
+  date_of_birth DATE,
+  display_name VARCHAR(30) UNIQUE
 );
 
 CREATE TABLE events (
@@ -38,7 +42,7 @@ CREATE TABLE events (
 
 CREATE TABLE badges (
   id SERIAL PRIMARY KEY,
-  title, VARCHAR(30)
+  title VARCHAR(30)
 );
 
 CREATE TABLE user_badges (
@@ -48,17 +52,17 @@ CREATE TABLE user_badges (
   obtained_on VARCHAR(20)
 );
 
-CREATE TABLE event_categories (
+CREATE TABLE event_tags (
   id SERIAL PRIMARY KEY,
-  category_id INT REFERENCES categories(id),
-  event_id INT REFERENCES events(id)
-)
+  event_id INT REFERENCES events(id),
+  tag_id INT REFERENCES tags(id)
+);
 
-CREATE TABLE user_categories (
+CREATE TABLE user_tags (
   id SERIAL PRIMARY KEY,
-  category_id INT REFERENCES categories(id),
-  event_id INT REFERENCES events(id)
-)
+  user_id INT REFERENCES users(id),
+  tag_id INT REFERENCES tags(id)
+);
 
 CREATE TABLE locations (
   id SERIAL PRIMARY KEY,
@@ -67,7 +71,7 @@ CREATE TABLE locations (
   longitude REAL,
   postcode VARCHAR(10),
   address TEXT,
-  citu VARCHAR(50),
+  city9 VARCHAR(50),
   description TEXT
 );
 
@@ -104,7 +108,7 @@ CREATE TABLE messages (
 
 CREATE TABLE user_messages (
   id SERIAL PRIMARY KEY,
-  user_id INT REFERNECES users(id),
+  user_id INT REFERENCES users(id),
   message_id INT REFERENCES messages(id)
 );
 
@@ -119,3 +123,39 @@ CREATE TABLE user_received_ratings (
   rating_id INT REFERENCES ratings(id),
   user_id INT REFERENCES users(id)
 );
+
+-- Insert seed data:
+
+-- user seeding:
+
+INSERT INTO users (first_name, last_name, email, date_of_birth, display_name )
+VALUES ('Raúl', 'Ruiz', 'jraulruizgarcia@gmail.com', '28/04/1988', 'rauletxailarena');
+
+INSERT INTO users (first_name, last_name, email, date_of_birth, display_name)
+VALUES ('Irene', 'Rodriguez', 'irenerodmer@gmail.com', '04/02/1988', 'irenerodmer');
+
+-- tags seeding:
+
+INSERT INTO tags (title)
+VALUES ('Noodles');
+
+INSERT INTO tags (title)
+VALUES ('Tapas');
+
+INSERT INTO tags (title)
+VALUES ('Pizza');
+
+INSERT INTO tags (title)
+VALUES ('Desserts');
+
+INSERT INTO user_tags (user_id, tag_id)
+VALUES (1, 1);
+
+INSERT INTO user_tags (user_id, tag_id)
+VALUES (1, 2);
+
+INSERT INTO user_tags (user_id, tag_id)
+VALUES (2, 3);
+
+INSERT INTO user_tags (user_id, tag_id)
+VALUES (2, 4);
