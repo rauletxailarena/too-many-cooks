@@ -112,19 +112,6 @@ CREATE TABLE messages (
 
 
 
--- events seeding:
-
-INSERT INTO locations (latitude, longitude, postcode, address, city, description)
-VALUES (1515, 4242, 'H11 1HD', '12 Duff Road', 'Edinburgh', 'My house');
-
-INSERT INTO events (host_id, location_id, title, description)
-VALUES (1, 1, 'Learn how to cook tapas with Pancho', 'A workshop in which our Spanish chef will introduce you into the tapas world');
-
-INSERT INTO user_events (event_id, user_id)
-VALUES (1, 2);
-
-INSERT INTO event_tags (event_id, tag_id)
-VALUES (1, 2);
 
 -- ratings seeding:
 
