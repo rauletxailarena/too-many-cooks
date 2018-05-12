@@ -19,13 +19,14 @@ CREATE TABLE users (
 
 CREATE TABLE interests (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(40)
+  title VARCHAR(40) UNIQUE
 );
 
 CREATE TABLE user_interests (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) ON DELETE CASCADE,
-  interest_id INT REFERENCES interests(id)
+  interest_id INT REFERENCES interests(id) ON DELETE CASCADE,
+  unique (user_id, interest_id)
 );
 
 

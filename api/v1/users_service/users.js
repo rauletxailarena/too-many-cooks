@@ -1,6 +1,6 @@
 var express = require("express")
 var router = express.Router()
-var pg = require("../../modules/db/postgres_connection.js")
+var dbQuery = require("../../../modules/db/postgres_connection.js").users_query
 
 router.use(function timeLog (req,res,next) {
   console.log("Time: " + Date.now())
@@ -17,7 +17,7 @@ router.get("/", function (req, res) {
 
   // if the query doesnt include query parameters
   } else {
-    pg.query("SELECT * FROM users", [], function(err, result) {
+    dbQuery("SELECT * FROM users", [], function(err, result) {
       if (err) {
         res.send(err)
       } else {
@@ -32,13 +32,14 @@ router.get("/", function (req, res) {
 })
 
 router.get("/:id", function(req, res) {
-  pg.query("SELECT * FROM users WHERE id = $1", [req.params['id']], function(err, result) {
+  dbQuery("SELECT * FROM users WHERE id = $1", [req.params['id']], function(err, result) {
     res.send(result.rows[0])
   })
 })
 
-router.get("/:id/tags", function(req, res) {
-  pg.query("SELECT tags.id, tags.title FROM users JOIN user_tags ON (users.id = user_tags.user_id) JOIN tags ON (tags.id = user_tags.tag_id) WHERE users.id = $1;",
+// Get user user interests
+router.get("/:id/interests", function(req, res) {
+  dbQuery("SELECT interests.id, interests.title FROM users JOIN user_interests ON (users.id = user_interests.user_id) JOIN interests ON (interests.id = user_interests.interest_id) WHERE users.id = $1;",
   [req.params['id']],
   function(err, result) {
     if (err) {
@@ -53,10 +54,11 @@ router.get("/:id/tags", function(req, res) {
   })
 })
 
+
 // POST ROUTES
 
 router.post("/", function(req, res) {
-  pg.query("INSERT INTO users (first_name, last_name, email, date_of_birth, display_name) VALUES ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5)",
+  dbQuery("INSERT INTO users (first_name, last_name, email, date_of_birth, display_name) VALUES ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5)",
   [req.body.first_name, req.body.last_name, req.body.email, req.body.date_of_birth, req.body.display_name],
   function(err, result) {
     if (err) {
@@ -67,10 +69,25 @@ router.post("/", function(req, res) {
   })
 })
 
+// Post interst to user
+
+router.post("/:user_id/interests/:interest_id", function(req, res) {
+  console.log("POST /users/:id/interests/:id hit")
+  dbQuery("INSERT INTO user_interests (user_id, interest_id) VALUES ($1, $2);",
+  [req.params['user_id'], req.params['interest_id']],
+  function(err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send("Interes " + req.body.interest_id + " added to user with id: " + req.body.interest_id + ".")
+    }
+  })
+})
+
 // PUT ROUTES
 
 router.put("/:id", function(req, res) {
-  pg.query("UPDATE users SET (first_name, last_name, email, date_of_birth, display_name) = ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5) WHERE id = $6",
+  dbQuery("UPDATE users SET (first_name, last_name, email, date_of_birth, display_name) = ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5) WHERE id = $6",
   [req.body.first_name, req.body.last_name, req.body.email, req.body.date_of_birth, req.body.display_name, req.body.id],
   function(err, result) {
     if (err) {
@@ -84,7 +101,7 @@ router.put("/:id", function(req, res) {
 // DELETE ROUTES
 
 router.delete("/:id", function(req, res) {
-  pg.query("DELETE FROM users WHERE id = $1",
+  dbQuery("DELETE FROM users WHERE id = $1",
   [req.params['id']],
   function(err, result) {
     if (err) {

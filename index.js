@@ -5,7 +5,8 @@ var express = require("express"),
     bodyParser = require('body-parser'),
     pg = require('pg'),
     home = require("./routes/home.js")
-    users = require("./api/v1/users.js")
+    users = require("./api/v1/users_service/users.js")
+    interests = require("./api/v1/users_service/interests.js")
     app = express();
     apiBasepath = "/api/v1"
 
@@ -26,6 +27,8 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 // app routes
 app.use(apiBasepath + "/users", users)
+
+app.use(apiBasepath + "/interests", interests)
 
 
 app.get("/", function(req, res) {
