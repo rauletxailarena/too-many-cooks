@@ -1,11 +1,8 @@
-const config = {
-  entry: `${__dirname}/app.js`,
+module.exports = {
+  entry: __dirname + "/src/app.js",
   output: {
     filename: "bundle.js",
-    path: `${__dirname}`
+    path: __dirname + "/build"
   },
-  devtool: "source-map",
-  }
-};
-
-module.exports = config;
+  devtool: 'source-map'
+}
