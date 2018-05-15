@@ -9,6 +9,7 @@ router.use(function timeLog (req,res,next) {
 
 // GET ROUTES
 
+
 router.get("/", function (req, res) {
 
   // if the request includes query parameters
@@ -19,6 +20,7 @@ router.get("/", function (req, res) {
   } else {
     dbQuery("SELECT * FROM users", [], function(err, result) {
       if (err) {
+        res.status(400)
         res.send(err)
       } else {
         const rowsReturned = []
@@ -33,6 +35,13 @@ router.get("/", function (req, res) {
 
 router.get("/:id", function(req, res) {
   dbQuery("SELECT * FROM users WHERE id = $1", [req.params['id']], function(err, result) {
+    res.send(result.rows[0])
+  })
+})
+
+router.get(":user_id/interests", function(req, res) {
+  dbQuery("select interests.id, interests.title from interests JOIN user_interests ON (interests.id = user_interests.interest_id) WHERE user_interests.user_id = $1;",
+   [req.params[':user_id']], function(err, result) {
     res.send(result.rows[0])
   })
 })
@@ -62,6 +71,7 @@ router.post("/", function(req, res) {
   [req.body.first_name, req.body.last_name, req.body.email, req.body.date_of_birth, req.body.display_name],
   function(err, result) {
     if (err) {
+      res.status(400)
       res.send(err)
     } else {
       res.send("User " + req.body.first_name + " " + req.body.last_name + " stored to the DB")
@@ -79,7 +89,7 @@ router.post("/:user_id/interests/:interest_id", function(req, res) {
     if (err) {
       res.send(err)
     } else {
-      res.send("Interes " + req.body.interest_id + " added to user with id: " + req.body.interest_id + ".")
+      res.send("Interes " + req.params.interest_id + " added to user with id: " + req.params.interest_id + ".")
     }
   })
 })
@@ -107,7 +117,27 @@ router.delete("/:id", function(req, res) {
     if (err) {
       res.send(err)
     } else {
-      res.send("User with id " + req.params["id"] + " deleted from the DB")
+      if (result.rowCount === 0) {
+        res.status(404)
+        res.send("User not found")
+      } else {
+        res.status(200)
+        res.send("User with id " + req.params["id"] + " deleted from the DB")
+      }
+    }
+  })
+})
+
+// Delete interest from user
+
+router.delete("/:user_id/interests/:interest_id", function(req, res) {
+  dbQuery("DELETE FROM user_interests WHERE user_id = $1 and interest_id = $2",
+  [req.params['user_id'], req.params['interest_id']],
+  function(err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send("Interest:  " + req.params["interest_id"] + " deleted from the DB")
     }
   })
 })

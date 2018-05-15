@@ -56,7 +56,13 @@ router.delete("/:id", function(req, res) {
     if (err) {
       res.send(err)
     } else {
-      res.send("Interest with id " + req.params["id"] + " deleted from the DB")
+      if (result.rowCount === 0) {
+        res.status(404)
+        res.send("Interest not found")
+      } else {
+        res.status(200)
+        res.send("Interest with id " + req.params["id"] + " deleted from the DB")
+      }
     }
   })
 })
