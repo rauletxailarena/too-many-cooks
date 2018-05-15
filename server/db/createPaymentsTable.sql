@@ -1,5 +1,5 @@
 -- command to use this file in psql:
--- psql -U raul -d payments -a -f /Users/raul/Documents/Development/TooManyCooks/modules/db/createPaymentsTable.sql
+-- psql -U raul -d payments -a -f /Users/raul/Documents/Development/TooManyCooks/server/db/createPaymentsTable.sql
 
 DROP TABLE IF EXISTS payments;
 

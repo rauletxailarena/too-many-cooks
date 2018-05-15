@@ -1,6 +1,6 @@
 var express = require("express")
 var router = express.Router()
-var dbQuery = require("../../../modules/db/postgres_connection.js").users_query
+var dbQuery = require("../../../db/postgres_connection.js").users_query
 
 
 // GET ROUTES

@@ -1,5 +1,5 @@
 -- command to use this file in psql:
--- psql -U raul -d ratings -a -f /Users/raul/Documents/Development/TooManyCooks/modules/db/createRatingsTable.sql
+-- psql -U raul -d ratings -a -f /Users/raul/Documents/Development/TooManyCooks/server/db/createRatingsTable.sql
 
 set datestyle to DMY, SQL;
 

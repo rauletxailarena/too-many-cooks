@@ -5,7 +5,6 @@ var express = require("express"),
     path = require('path'),
     bodyParser = require('body-parser'),
     pg = require('pg'),
-    home = require("../routes/home.js")
     users = require("../api/v1/users_service/users.js")
     interests = require("../api/v1/users_service/interests.js")
     apiBasepath = "/api/v1"

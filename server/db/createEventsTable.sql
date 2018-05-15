@@ -1,5 +1,5 @@
 -- command to use this file in psql:
--- psql -U raul -d events -a -f /Users/raul/Documents/Development/TooManyCooks/modules/db/createEventsTable.sql
+-- psql -U raul -d events -a -f /Users/raul/Documents/Development/TooManyCooks/server/db/createEventsTable.sql
 
 set datestyle to DMY, SQL;
 
