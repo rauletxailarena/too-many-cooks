@@ -40,6 +40,9 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/User"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         405:
           description: "Invalid input"
@@ -51,7 +54,11 @@ paths:
       tags: 
       - "user"
       summary: "Returns an array with all the users in the system"
-      operationId: getUsers
+      operationId: "getUsers"
+      parameters: 
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       produces: 
       - "application/json"
       responses:
@@ -77,6 +84,9 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         200:
           description: "successful operation"
@@ -101,6 +111,9 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses: 
         200:
           description: "successful operation"
@@ -129,6 +142,9 @@ paths:
         in: "body"
         schema:
           $ref: "#/definitions/User"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses: 
         200:
           description: "successful operation"
@@ -147,6 +163,10 @@ paths:
       operationId: "getInterests"
       produces:
       - "application/json"
+      parameters: 
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses: 
         200:
           description: "Successfull operation"
@@ -168,6 +188,9 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Interest"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         405:
           description: "Invalid input"
@@ -193,6 +216,9 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         200:
           description: "successful operation"
@@ -217,6 +243,9 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses: 
         200:
           description: "successful operation"
@@ -242,6 +271,9 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         200:
           description: "successful operation"
@@ -272,6 +304,9 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         200:
           description: "Successful operation"
@@ -297,13 +332,15 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "x-apikey"
+        in: "header"
+        type: "string"
       responses:
         200:
           description: "Successful operation"
         400:
           description: "Server error"
- 
- 
+
 definitions:
   User:
     type: "object"
@@ -338,3 +375,5 @@ definitions:
       title:
         type: "string"
         example: "Craft beer"
+
+    
