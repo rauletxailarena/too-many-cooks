@@ -7,15 +7,15 @@ window.addEventListener('load', function(){
   // Make all the buttons work
   var ui = new UI();
 
-  var button = document.getElementById("log-in-button")
-  button.onclick = loginButtonClicked
-
-  function loginButtonClicked() {
-    requestHelper.postRequestWithHeaders("https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users",
-      [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}],
-      function(data) {
-        console.log(JSON.stringify(data))
-      })
-  }
+  // var button = document.getElementById("log-in-button")
+  // button.onclick = loginButtonClicked
+  //
+  // function loginButtonClicked() {
+  //   requestHelper.postRequestWithHeaders("https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users",
+  //     [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}],
+  //     function(data) {
+  //       console.log(JSON.stringify(data))
+  //     })
+  // }
 
 });

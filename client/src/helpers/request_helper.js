@@ -37,7 +37,7 @@ requestHelper.getRequestWithHeaders = function (url, headerArray, callback) {
   xhr.send()
 }
 
-requestHelper.postRequestWithHeaders = function (url, headerArray, callback) {
+requestHelper.postRequestWithHeaders = function (url, headerArray, payload, callback) {
   // console.log("Request Helper, Get Request With Headers, This is", this)
   var xhr = new XMLHttpRequest()
   xhr.open('POST', url)
@@ -54,7 +54,7 @@ requestHelper.postRequestWithHeaders = function (url, headerArray, callback) {
     callback(data)
   })
 
-  xhr.send()
+  xhr.send(payload)
 }
 
 

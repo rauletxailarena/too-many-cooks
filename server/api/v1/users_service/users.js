@@ -74,6 +74,7 @@ router.post("/", function(req, res) {
       res.status(400)
       res.send(err)
     } else {
+      console.log(req.body)
       res.send({"Operation result" : "User " + req.body.first_name + " " + req.body.last_name + " stored to the DB"})
     }
   })

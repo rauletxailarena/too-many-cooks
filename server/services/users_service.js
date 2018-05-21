@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
 
 // body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended:true}))
 
 
 // app routes

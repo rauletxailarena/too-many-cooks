@@ -1,5 +1,7 @@
+var sign_up_button = require("./sign_up_button.js")
+
 var UI = function(){
-  this.coordinates = {};
+  this.sign_up_button = new sign_up_button()
 }
 
 
