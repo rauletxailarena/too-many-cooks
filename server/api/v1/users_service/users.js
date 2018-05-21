@@ -14,7 +14,7 @@ router.get("/", function (req, res) {
 
   // if the request includes query parameters
   if (Object.keys(req.query).length !== 0) {
-    res.send("Some queries in request" + JSON.stringify(req.query))
+    res.send({"Operation result" : "Some queries in request" + JSON.stringify(req.query)})
 
   // if the query doesnt include query parameters
   } else {
@@ -74,7 +74,7 @@ router.post("/", function(req, res) {
       res.status(400)
       res.send(err)
     } else {
-      res.send("User " + req.body.first_name + " " + req.body.last_name + " stored to the DB")
+      res.send({"Operation result" : "User " + req.body.first_name + " " + req.body.last_name + " stored to the DB"})
     }
   })
 })
@@ -93,6 +93,22 @@ router.post("/:user_id/interests/:interest_id", function(req, res) {
     }
   })
 })
+
+// Post rating to users
+
+router.post("/:user_id/ratings", function(req, res) {
+  console.log("POST /users/:id/ratings/:id hit")
+  dbQuery("INSERT INTO ratings (score, comments, from_user, to_user, event_id) VALUES ($1, $2, $3, $4, $5);",
+  [req.body['score'], req.body['comments'], req.params['user_id'], req.body['to_user'], req.body['event_id']],
+  function(err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send("Rating " + req.body.comments + " added to user with id: " + req.body.to_user + ".")
+    }
+  })
+})
+
 
 // PUT ROUTES
 

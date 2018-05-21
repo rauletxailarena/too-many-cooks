@@ -7,6 +7,7 @@ var express = require("express"),
     pg = require('pg'),
     users = require("../api/v1/users_service/users.js")
     interests = require("../api/v1/users_service/interests.js")
+    ratings = require("../api/v1/users_service/ratings.js")
     apiBasepath = "/api/v1"
 
 
@@ -14,7 +15,7 @@ var express = require("express"),
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-apikey");
   next();
 });
 
@@ -27,6 +28,8 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(apiBasepath + "/users", users)
 
 app.use(apiBasepath + "/interests", interests)
+
+app.use(apiBasepath + "/ratings", ratings)
 
 
 app.get("/", function(req, res) {
