@@ -1,5 +1,6 @@
 var requestHelper = require('./request_helper')
 var field_helper = require('./field_helper')
+var display_helper = require('./display_helper')
 
 var sign_up_button = function() {
 
@@ -18,6 +19,11 @@ var sign_up_button = function() {
       return
     }
 
+    if (!(field_helper.same_content("sign-up-input-password", "sign-up-input-password-2"))) {
+      document.getElementById("sign-up-hint").innerHTML = "The passwords don't match"
+      return
+    }
+
     var user_to_register = {
       "first_name" : null,
       "last_name" : null,
@@ -29,8 +35,12 @@ var sign_up_button = function() {
     requestHelper.postRequestWithHeaders("https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users",
       [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}, {"header": "Content-Type", "value": "application/json"}],
       JSON.stringify(user_to_register),
-      function(data) {
+      function(data, status) {
+        console.log(JSON.stringify(status))
         console.log(JSON.stringify(data))
+        if ("id" in data) {
+          display_helper.hide_div("welcome-page-wrapper")
+        }
       })
   })
 }

@@ -52,14 +52,14 @@ requestHelper.postRequestWithHeaders = function (url, headerArray, payload, call
   }
 
   xhr.addEventListener('load', function () {
+    var status = xhr.status
     var jsonString = xhr.responseText
     var data = JSON.parse(jsonString)
-    callback(data)
+    callback(data, status)
   })
 
   xhr.send(payload)
 }
-
 
 requestHelper.postRequest = function (url, callback, payload) {
   var xhr = new XMLHttpRequest()
@@ -77,8 +77,6 @@ requestHelper.postRequest = function (url, callback, payload) {
   var jsonString = JSON.stringify(payload)
   xhr.send(jsonString)
 }
-
-        // requestHelper.deleteRequest(url, callback)
 
 requestHelper.deleteRequest = function (url, callback) {
   var xhr = new XMLHttpRequest()

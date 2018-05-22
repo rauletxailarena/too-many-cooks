@@ -14,21 +14,65 @@
 
   <h1>Welcome to too many cooks!</h1>
 
-  <div id="sign-up-wrapper">
-    <input type="text" id="sign-up-input-username" placeholder="Enter your username">
-    <input type="text" id="sign-up-input-email" placeholder="Enter your email">
-    <input type="password" id="sign-up-input-password" placeholder="Enter your password">
-    <input type="password" id="sign-up-input-password-2" placeholder="Enter your password again">
-    <button id="sign-up-button">Sign up</button>
-    <span id="sign-up-hint"></span>
+  <div id="welcome-page-wrapper">
+
+    <div id="sign-up-wrapper">
+      <input type="text" id="sign-up-input-username" placeholder="Enter your username">
+      <input type="text" id="sign-up-input-email" placeholder="Enter your email">
+      <input type="password" id="sign-up-input-password" placeholder="Enter your password">
+      <input type="password" id="sign-up-input-password-2" placeholder="Enter your password again">
+      <button id="sign-up-button">Sign up</button>
+      <span id="sign-up-hint"></span>
+    </div>
+
+    <div id="log-in-wrapper">
+      <input type="text" id="log-in-input-username" placeholder="Enter your username">
+      <input type="password" id="log-in-input-password" placeholder="Enter your password">
+      <button id="log-in-button">Log in</button>
+      <span id="log-in-hint"></span>
+    </div>
+
   </div>
 
-  <div id="log-in-wrapper">
-    <input type="text" id="log-in-input-username" placeholder="Enter your username">
-    <input type="password" id="log-in-input-password" placeholder="Enter your password">
-    <button id="log-in-button">Log in</button>
-    <span id="log-in-hint"></span>
+
+  <div id="profile-page-wrapper">
+
+    <div id="personal-details-wrapper">
+
+      <input type="text" id="profile-input-username" placeholder="Enter your username">
+      <input type="text" id="profile-input-first-name" placeholder="Enter your first name">
+      <input type="text" id="profile-input-last-name" placeholder="Enter your last name">
+      <input type="text" id="profile-input-email" placeholder="Enter your email">
+      <input type="date" id="profile-input-email" placeholder="Enter your birthdate">
+      <label for="profile-input-share-details">Share details?</label>
+      <input type="checkbox" id="profile-input-share-details">
+
+    </div>
+
+    <div id="user-type-wrapper">
+
+      <input type = "radio" value = "1" name = "user-type"/>Chef
+      <input type = "radio" value = "2" name = "user-type"/>Student
+      <input type = "radio" value = "3" name = "user-type"/>Both
+
+    </div>
+
+    <div id="interest-wrapper">
+    </div>
+
+    <div id="profile-page-buttons-wrapper">
+
+      <div id="update-profile-button-wrapper">
+        <button id="update-profile-button">Update profile</button>
+      </div>
+      <div id="search-for-events-button-wrapper">
+        <button id="search-for-events-button">Search for events!</button>
+      </div>
+
+    </div>
+
   </div>
+
 
 </body>
 </html>

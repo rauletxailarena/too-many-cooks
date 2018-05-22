@@ -88,15 +88,16 @@ router.get("/:id/interests", function(req, res) {
 // POST ROUTES
 
 router.post("/", function(req, res) {
-  dbQuery("INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details) VALUES ($1, $2, $3, $4, TO_DATE($5, 'DD/MM/YYYY'), $6, $7, $8)",
+  dbQuery("INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details) VALUES ($1, $2, $3, $4, TO_DATE($5, 'DD/MM/YYYY'), $6, $7, $8) returning *",
   [req.body.first_name, req.body.last_name, req.body.email, req.body.password, req.body.date_of_birth, req.body.user_name, req.body.user_type, req.body.share_personal_details],
   function(err, result) {
     if (err) {
       res.status(400)
       res.send(err)
+    } else if ("rows" in result) {
+        res.send(result.rows[0])
     } else {
-      console.log(req.body)
-      res.send({"Operation result" : "User " + req.body.first_name + " " + req.body.last_name + " stored to the DB"})
+      res.send(result)
     }
   })
 })
