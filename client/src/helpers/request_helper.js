@@ -17,9 +17,12 @@ requestHelper.getRequest = function (url, callback) {
   this.getRequestWithHeaders(url, [], callback)
 }
 
-requestHelper.getRequestWithHeaders = function (url, headerArray, callback) {
+requestHelper.getRequestWithHeaders = function (url, headerArray, query_params, callback) {
   // console.log("Request Helper, Get Request With Headers, This is", this)
   var xhr = new XMLHttpRequest()
+  if (query_params !== null) {
+    url = url + query_params
+  }
   xhr.open('GET', url)
 
   for (var headerObject of headerArray) {

@@ -13,9 +13,10 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(30),
   last_name VARCHAR(30),
+  password VARCHAR(30) NOT NULL,
   email VARCHAR(50) UNIQUE,
   date_of_birth DATE,
-  display_name VARCHAR(30) UNIQUE,
+  user_name VARCHAR(30) UNIQUE,
   user_type INT,
   share_personal_details BOOLEAN,
   constraint valid_user_type
@@ -47,11 +48,11 @@ CREATE TABLE ratings (
 
 -- user seeding:
 
-INSERT INTO users (first_name, last_name, email, date_of_birth, display_name, user_type, share_personal_details )
-VALUES ('Raúl', 'Ruiz', 'jraulruizgarcia@gmail.com', '28/04/1988', 'rauletxailarena', 1, 'true');
+INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details )
+VALUES ('Raúl', 'Ruiz', 'jraulruizgarcia@gmail.com', 'raulete', '28/04/1988', 'rauletxailarena', 1, 'true');
 
-INSERT INTO users (first_name, last_name, email, date_of_birth, display_name, user_type, share_personal_details)
-VALUES ('Irene', 'Rodriguez', 'irenerodmer@gmail.com', '04/02/1988', 'irenerodmer', 1, 'true');
+INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details)
+VALUES ('Irene', 'Rodriguez', 'irenerodmer@gmail.com', 'ireneta', '04/02/1988', 'irenerodmer', 1, 'true');
 
 -- tags seeding:
 

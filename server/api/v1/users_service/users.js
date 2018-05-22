@@ -14,7 +14,28 @@ router.get("/", function (req, res) {
 
   // if the request includes query parameters
   if (Object.keys(req.query).length !== 0) {
-    res.send({"Operation result" : "Some queries in request" + JSON.stringify(req.query)})
+    var username = req.query.username;
+    var password = req.query.password;
+    console.log({"Username" : username, "Password": password})
+
+    dbQuery("SELECT * FROM users WHERE user_name = $1 and password = $2",
+      [username, password],
+      function(err, result) {
+        if (err) {
+          res.status(400)
+          res.send(err)
+        } else {
+          const rowsReturned = []
+          result.rows.forEach(function(row) {
+            rowsReturned.push(row);
+          })
+          console.log(rowsReturned.lengthn)
+          if (rowsReturned.length <= 0) {
+            res.status(400)
+          }
+          res.send(rowsReturned)
+        }
+      })
 
   // if the query doesnt include query parameters
   } else {
@@ -67,8 +88,8 @@ router.get("/:id/interests", function(req, res) {
 // POST ROUTES
 
 router.post("/", function(req, res) {
-  dbQuery("INSERT INTO users (first_name, last_name, email, date_of_birth, display_name) VALUES ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5)",
-  [req.body.first_name, req.body.last_name, req.body.email, req.body.date_of_birth, req.body.display_name],
+  dbQuery("INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details) VALUES ($1, $2, $3, $4, TO_DATE($5, 'DD/MM/YYYY'), $6, $7, $8)",
+  [req.body.first_name, req.body.last_name, req.body.email, req.body.password, req.body.date_of_birth, req.body.user_name, req.body.user_type, req.body.share_personal_details],
   function(err, result) {
     if (err) {
       res.status(400)
@@ -114,8 +135,8 @@ router.post("/:user_id/ratings", function(req, res) {
 // PUT ROUTES
 
 router.put("/:id", function(req, res) {
-  dbQuery("UPDATE users SET (first_name, last_name, email, date_of_birth, display_name) = ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5) WHERE id = $6",
-  [req.body.first_name, req.body.last_name, req.body.email, req.body.date_of_birth, req.body.display_name, req.body.id],
+  dbQuery("UPDATE users SET (first_name, last_name, email, password, date_of_birth, user_name) = ($1, $2, $3, $4, TO_DATE($5, 'DD/MM/YYYY'), $6) WHERE id = $6",
+  [req.body.first_name, req.body.last_name, req.body.email, req.body.password, req.body.date_of_birth, req.body.user_name, req.body.id],
   function(err, result) {
     if (err) {
       res.send(err)
