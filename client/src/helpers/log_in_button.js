@@ -2,11 +2,13 @@ var requestHelper = require('./request_helper')
 var field_helper = require('./field_helper')
 var profile_form_helper = require('./profile_form_helper')
 var display_helper = require('./display_helper')
+var session_info = require('./session_info')
 
 // test
 // var url = "localhost:3001/api/v1/users"
 
 //prod
+
 var url = "https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users"
 
 var log_in_button = function() {
@@ -14,6 +16,7 @@ var log_in_button = function() {
   var button = document.getElementById("log-in-button")
 
   button.addEventListener("click", function() {
+
 
     // Grab all the elements
 
@@ -35,15 +38,20 @@ var log_in_button = function() {
     var user_type_radio_buttons = {user_type_chef, user_type_student, user_type_both}
 
     // Check no fields are left empty
+
     if (field_helper.is_field_empty(password) || field_helper.is_field_empty(username)) {
       document.getElementById("log-in-hint").innerHTML = "Make sure you don't leave any empty fields"
       return
     }
 
+
     // Grab username and password to prepare request
+
     var query_params = "?username=" + username + "&password=" + password
 
+
     // Request data using username and password
+
     requestHelper.getRequestWithHeaders(url,
       [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}],
       query_params,
@@ -56,6 +64,7 @@ var log_in_button = function() {
             display_helper.show_div("profile-page-wrapper")
             display_helper.hide_div("welcome-page-wrapper")
             profile_form_helper.fill_profile_form(data[0], profile_fields, user_type_radio_buttons)
+            session_info.user_id = data[0].id
           }
       })
 
