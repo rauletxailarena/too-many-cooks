@@ -1,6 +1,7 @@
 var requestHelper = require('./request_helper')
 var field_helper = require('./field_helper')
 var display_helper = require('./display_helper')
+var url = "https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users"
 
 var sign_up_button = function() {
 
@@ -32,7 +33,7 @@ var sign_up_button = function() {
       "date_of_birth": null
     }
 
-    requestHelper.postRequestWithHeaders("https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users",
+    requestHelper.postRequestWithHeaders(url,
       [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}, {"header": "Content-Type", "value": "application/json"}],
       JSON.stringify(user_to_register),
       function(data, status) {
