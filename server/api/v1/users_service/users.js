@@ -15,7 +15,7 @@ router.get("/", function (req, res) {
   {
     //In case of an OPTIONS, we allow the access to the origin of the petition
     res.AddHeader("Access-Control-Allow-Origin", "*");
-    res.AddHeader("Access-Control-Allow-Methods", "POST");
+    res.AddHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE");
     res.AddHeader("Access-Control-Allow-Headers", "accept, content-type");
     res.AddHeader("Access-Control-Max-Age", "1728000");
   }
@@ -158,6 +158,44 @@ router.put("/:id", function(req, res) {
     }
   })
 })
+
+
+router.put("/:id/interests", function(req, res) {
+
+  if (Object.keys(req.query).length !== 0) {
+
+    // Parse the array that is coming in the query params
+    var arr = JSON.parse(req.query.interestsids)
+
+    // Delete all the user interests of the specific user
+    dbQuery("DELETE FROM user_interests WHERE user_id = $1",
+    [req.params['id']],
+    function(err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(result)
+      }
+    })
+
+    // For each interest id in the query param, add such interest to user_interests table
+    arr.forEach(function(interestId) {
+      console.log(interestId)
+      dbQuery("INSERT INTO user_interests (user_id, interest_id) VALUES ($1, $2)",
+      [req.params['id'], interestId],
+      function(err, result) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log(result)
+        }
+      })
+    })
+
+    res.send(arr)
+  }
+})
+
 
 // DELETE ROUTES
 

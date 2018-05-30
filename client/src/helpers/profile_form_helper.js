@@ -101,6 +101,7 @@ function profile_field_helper() {
         checkBox.name = interest.title;
         checkBox.value = interest.id;
         checkBox.id = "interest-check-box-" + interest.id;
+        checkBox.classList.add('interest-checkbox')
 
         if (userInterestsIds.indexOf(interest.id) > -1) {
           console.log("Match found", interest.id)
@@ -157,6 +158,19 @@ function profile_field_helper() {
   this.convertDate = function(date) {
     var dateArray = date.split("-")
     return dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0]
+  }
+
+  this.updateUserInterests = function() {
+    // Get ahold of the textBoxes
+    var checkBoxes = document.getElementById("interest-wrapper").childNodes;
+    var queryParamsString = "?interestsids=["
+    checkBoxes.forEach(function(checkBox) {
+      if (checkBox.nodeName === "INPUT" && checkBox.checked === true ) {
+        queryParamsString += "\"" + checkBox.value + "\""
+      }
+    })
+    queryParamsString += "]"
+    console.log(queryParamsString)
   }
 
 }

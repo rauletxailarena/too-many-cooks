@@ -14,6 +14,8 @@ var update_profile_button = function() {
 
   button.addEventListener("click", function() {
 
+    profile_form_helper.updateUserInterests()
+
     var user_to_register = profile_form_helper.getUserFromProfileFields()
     console.log("UpdatedUser", user_to_register)
     requestHelper.putRequestWithHeaders(test_url + "/" + user_to_register.id,
