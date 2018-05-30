@@ -4,12 +4,9 @@ var profile_form_helper = require('./profile_form_helper')
 var display_helper = require('./display_helper')
 var session_info = require('./session_info')
 
-// test
-// var url = "localhost:3001/api/v1/users"
-
-//prod
 
 var url = "https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users"
+var test_url = "http://localhost:3001/api/v1/users"
 
 var log_in_button = function() {
 
@@ -52,7 +49,7 @@ var log_in_button = function() {
 
     // Request data using username and password
 
-    requestHelper.getRequestWithHeaders(url,
+    requestHelper.getRequestWithHeaders(test_url,
       [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}],
       query_params,
       function(data) {

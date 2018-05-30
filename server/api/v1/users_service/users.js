@@ -9,8 +9,16 @@ router.use(function timeLog (req,res,next) {
 
 // GET ROUTES
 
-
+// get all users
 router.get("/", function (req, res) {
+  if (req.HttpMethod == "OPTIONS")
+  {
+    //In case of an OPTIONS, we allow the access to the origin of the petition
+    res.AddHeader("Access-Control-Allow-Origin", "*");
+    res.AddHeader("Access-Control-Allow-Methods", "POST");
+    res.AddHeader("Access-Control-Allow-Headers", "accept, content-type");
+    res.AddHeader("Access-Control-Max-Age", "1728000");
+  }
 
   // if the request includes query parameters
   if (Object.keys(req.query).length !== 0) {
@@ -54,20 +62,22 @@ router.get("/", function (req, res) {
   }
 })
 
+// get user by id
 router.get("/:id", function(req, res) {
   dbQuery("SELECT * FROM users WHERE id = $1", [req.params['id']], function(err, result) {
     res.send(result.rows[0])
   })
 })
 
-router.get(":user_id/interests", function(req, res) {
-  dbQuery("select interests.id, interests.title from interests JOIN user_interests ON (interests.id = user_interests.interest_id) WHERE user_interests.user_id = $1;",
-   [req.params[':user_id']], function(err, result) {
-    res.send(result.rows[0])
-  })
-})
+// get user interests by user id
+// router.get(":user_id/interests", function(req, res) {
+//   dbQuery("select interests.id, interests.title from interests JOIN user_interests ON (interests.id = user_interests.interest_id) WHERE user_interests.user_id = $1;",
+//    [req.params[':user_id']], function(err, result) {
+//     res.send(result.rows[0])
+//   })
+// })
 
-// Get user user interests
+// get user interests by user id
 router.get("/:id/interests", function(req, res) {
   dbQuery("SELECT interests.id, interests.title FROM users JOIN user_interests ON (users.id = user_interests.user_id) JOIN interests ON (interests.id = user_interests.interest_id) WHERE users.id = $1;",
   [req.params['id']],
@@ -97,6 +107,7 @@ router.post("/", function(req, res) {
     } else if ("rows" in result) {
         res.send(result.rows[0])
     } else {
+      res.set('Access-Control-Allow-Origin', '*')
       res.send(result)
     }
   })
@@ -136,13 +147,14 @@ router.post("/:user_id/ratings", function(req, res) {
 // PUT ROUTES
 
 router.put("/:id", function(req, res) {
-  dbQuery("UPDATE users SET (first_name, last_name, email, password, date_of_birth, user_name) = ($1, $2, $3, $4, TO_DATE($5, 'DD/MM/YYYY'), $6) WHERE id = $6",
-  [req.body.first_name, req.body.last_name, req.body.email, req.body.password, req.body.date_of_birth, req.body.user_name, req.body.id],
+
+  dbQuery("UPDATE users SET (first_name, last_name, email, user_name, date_of_birth, user_type, share_personal_details) = ($1, $2, $3, $4, TO_DATE($5, 'DD/MM/YYYY'), $6, $7) WHERE id = $8",
+  [req.body.first_name, req.body.last_name, req.body.email, req.body.user_name, req.body.date_of_birth, req.body.user_type, req.body.share_personal_details, req.body.id],
   function(err, result) {
     if (err) {
       res.send(err)
     } else {
-      res.send("User " + req.body.first_name + " " + req.body.last_name + " updated")
+      res.send(req.body)
     }
   })
 })

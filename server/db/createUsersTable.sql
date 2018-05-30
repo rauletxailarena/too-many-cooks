@@ -52,7 +52,7 @@ INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_n
 VALUES ('Raúl', 'Ruiz', 'jraulruizgarcia@gmail.com', 'raulete', '28/04/1988', 'rauletxailarena', 1, 'true');
 
 INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details)
-VALUES ('Irene', 'Rodriguez', 'irenerodmer@gmail.com', 'ireneta', '04/02/1988', 'irenerodmer', 1, 'true');
+VALUES ('Irene', 'Rodriguez', 'irenerodmer@gmail.com', 'ireneta', '20/02/1988', 'irenerodmer', 1, 'true');
 
 -- tags seeding:
 

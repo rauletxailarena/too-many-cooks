@@ -61,6 +61,27 @@ requestHelper.postRequestWithHeaders = function (url, headerArray, payload, call
   xhr.send(payload)
 }
 
+requestHelper.putRequestWithHeaders = function (url, headerArray, payload, callback) {
+  // console.log("Request Helper, Get Request With Headers, This is", this)
+  var xhr = new XMLHttpRequest()
+  xhr.open('PUT', url)
+
+  for (var headerObject of headerArray) {
+    var header = headerObject.header
+    var value = headerObject.value
+    xhr.setRequestHeader(header, value)
+  }
+
+  xhr.addEventListener('load', function () {
+    var status = xhr.status
+    var jsonString = xhr.responseText
+    var data = JSON.parse(jsonString)
+    callback(data, status)
+  })
+
+  xhr.send(payload)
+}
+
 requestHelper.postRequest = function (url, callback, payload) {
   var xhr = new XMLHttpRequest()
   xhr.open('POST', url)

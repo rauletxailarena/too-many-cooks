@@ -2,8 +2,10 @@ var requestHelper = require('./request_helper')
 var field_helper = require('./field_helper')
 var display_helper = require('./display_helper')
 var profile_form_helper = require('./profile_form_helper')
+var session_info = require('./session_info')
 
 var url = "https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users"
+var test_url = "http://localhost:3001/api/v1/users"
 
 var sign_up_button = function() {
 
@@ -51,6 +53,7 @@ var sign_up_button = function() {
     // Create user to store
 
     var user_to_register = {
+      "user_name" : username,
       "first_name" : null,
       "last_name" : null,
       "email": email,
@@ -58,7 +61,7 @@ var sign_up_button = function() {
       "date_of_birth": null
     }
 
-    requestHelper.postRequestWithHeaders(url,
+    requestHelper.postRequestWithHeaders(test_url,
       [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}, {"header": "Content-Type", "value": "application/json"}],
       JSON.stringify(user_to_register),
       function(data, status) {
@@ -68,6 +71,7 @@ var sign_up_button = function() {
           display_helper.hide_div("welcome-page-wrapper")
           display_helper.show_div("profile-page-wrapper")
           profile_form_helper.fill_profile_form(data, profile_fields, user_type_radio_buttons)
+          session_info.user_id = data.id
         }
       })
   })
