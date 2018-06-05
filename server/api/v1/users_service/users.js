@@ -69,13 +69,6 @@ router.get("/:id", function(req, res) {
   })
 })
 
-// get user interests by user id
-// router.get(":user_id/interests", function(req, res) {
-//   dbQuery("select interests.id, interests.title from interests JOIN user_interests ON (interests.id = user_interests.interest_id) WHERE user_interests.user_id = $1;",
-//    [req.params[':user_id']], function(err, result) {
-//     res.send(result.rows[0])
-//   })
-// })
 
 // get user interests by user id
 router.get("/:id/interests", function(req, res) {
@@ -159,13 +152,12 @@ router.put("/:id", function(req, res) {
   })
 })
 
-
+// Add an array of interests to an user
 router.put("/:id/interests", function(req, res) {
 
-  if (Object.keys(req.query).length !== 0) {
-
     // Parse the array that is coming in the query params
-    var arr = JSON.parse(req.query.interestsids)
+    var arr = req.body.interestsids
+    console.log("conten of arr", JSON.stringify(arr))
 
     // Delete all the user interests of the specific user
     dbQuery("DELETE FROM user_interests WHERE user_id = $1",
@@ -174,26 +166,29 @@ router.put("/:id/interests", function(req, res) {
       if (err) {
         console.log(err)
       } else {
+        // Once all the data has been deleted
+
+
+        arr.forEach(function(interestId) {
+          console.log(interestId)
+          dbQuery("INSERT INTO user_interests (user_id, interest_id) VALUES ($1, $2)",
+          [req.params['id'], interestId],
+          function(err, result) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(result)
+            }
+          })
+        })
+        var interestsAdded = {}
+        interestsAdded.interestAdded = arr
+        res.send(JSON.stringify(interestsAdded))
+
+
         console.log(result)
       }
     })
-
-    // For each interest id in the query param, add such interest to user_interests table
-    arr.forEach(function(interestId) {
-      console.log(interestId)
-      dbQuery("INSERT INTO user_interests (user_id, interest_id) VALUES ($1, $2)",
-      [req.params['id'], interestId],
-      function(err, result) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log(result)
-        }
-      })
-    })
-
-    res.send(arr)
-  }
 })
 
 

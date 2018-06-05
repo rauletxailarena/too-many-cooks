@@ -163,15 +163,21 @@ function profile_field_helper() {
   this.updateUserInterests = function() {
     // Get ahold of the textBoxes
     var checkBoxes = document.getElementById("interest-wrapper").childNodes;
-    var queryParamsString = "?interestsids=["
+    var interests = {}
+    interests.interestsids = []
     checkBoxes.forEach(function(checkBox) {
       if (checkBox.nodeName === "INPUT" && checkBox.checked === true ) {
-        queryParamsString += "\"" + checkBox.value + "\""
+        interests.interestsids.push(checkBox.value)
       }
     })
-    queryParamsString += "]"
-    console.log(queryParamsString)
-  }
+    console.log(JSON.stringify(interests))
+    request_helper.putRequestWithHeaders(users_interests_test_url + session_info.user_id + "/interests",
+      [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}, {"header": "Content-Type", "value": "application/json"}],
+      JSON.stringify(interests),
+      function(status) {
+        console.log(status)
+      }
+    )}
 
 }
 

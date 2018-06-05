@@ -6,7 +6,7 @@ var session_info = require('./session_info')
 var profile_form_helper = require('./profile_form_helper')
 
 var url = "https://rauletxailarena-eval-test.apigee.net/toomanycooks/api/v1/users"
-var test_url = "https://localhost/api/v1/users"
+var test_url = "http://localhost:3001/api/v1/users"
 
 var update_profile_button = function() {
 
