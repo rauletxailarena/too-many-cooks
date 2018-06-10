@@ -5,9 +5,7 @@ var express = require("express"),
     path = require('path'),
     bodyParser = require('body-parser'),
     pg = require('pg'),
-    users = require("../api/v1/users_service/users.js")
-    interests = require("../api/v1/users_service/interests.js")
-    ratings = require("../api/v1/users_service/ratings.js")
+    events = require("../api/v1/events_service/events.js")
     apiBasepath = "/api/v1"
 
 
@@ -24,20 +22,15 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
-
 // app routes
-app.use(apiBasepath + "/users", users)
-
-app.use(apiBasepath + "/interests", interests)
-
-app.use(apiBasepath + "/ratings", ratings)
+app.use(apiBasepath + "/events", events)
 
 
 app.get("/", function(req, res) {
-  res.send("Root directory of users service")
+  res.send("Root directory of events service")
 })
 
-// Start server in port 3001
-app.listen(3001, function() {
-  console.log("Users service started on port 3001")
+// Start server in port 3002
+app.listen(3002, function() {
+  console.log("Users service started on port 3002")
 });

@@ -54,6 +54,12 @@ VALUES ('Raúl', 'Ruiz', 'jraulruizgarcia@gmail.com', 'raulete', '28/04/1988', '
 INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details)
 VALUES ('Irene', 'Rodriguez', 'irenerodmer@gmail.com', 'ireneta', '20/02/1988', 'irenerodmer', 1, 'true');
 
+INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details)
+VALUES ('TestUser1', 'TestUser1Surname', 'test1@gmail.com', 'test1', '20/02/1988', 'test1', 1, 'true');
+
+INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details)
+VALUES ('TestUser2', 'TestUser2Surname', 'test2@gmail.com', 'test2', '20/02/1988', 'test2', 1, 'true');
+
 -- tags seeding:
 
 INSERT INTO interests (title)
