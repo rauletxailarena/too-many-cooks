@@ -57,7 +57,8 @@ CREATE TABLE event_assistants (
   --  2 = approved
   --  2 = not accepted
   constraint valid_event_assistant_status
-      check (status <= 3)
+      check (status <= 3),
+  unique (event_id, user_id)
 );
 
 -- events seeding:
