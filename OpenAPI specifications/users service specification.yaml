@@ -1,495 +1,475 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "This is my 'users' microservice API. In here you can explore and play around with the different operations provided my this microservice."
-  version: "1.0.0"
-  title: "Users microservice"
+  description: >-
+    This is my 'users' microservice API. In here you can explore and play around
+    with the different operations provided my this microservice.
+  version: 1.0.0
+  title: Users microservice
   contact:
-    email: "jraulruizgarcia@gmail.com"
+    email: jraulruizgarcia@gmail.com
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "rauletxailarena-eval-test.apigee.net"
-basePath: "/toomanycooks/api/v1"
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+# host: rauletxailarena-eval-test.apigee.net
+host: localhost:3001
+# basePath: /toomanycooks/api/v1
+basePath: /api/v1
 schemes:
-- "https"
-
+  - http
+  - https
 tags:
-- name: "user"
-  description: "Object that represents the users of the app"
-- name: "interest"
-  description: "Object that represents interests that the app users might adhere to"
-- name: "user-interest"
-  description: "Operations concerning interests linked to users"
-- name: "user"
-  description: "Object that represents the ratings given from and to users of the app"
+  - name: user
+    description: Object that represents the users of the app
+  - name: interest
+    description: Object that represents interests that the app users might adhere to
+  - name: user-interest
+    description: Operations concerning interests linked to users
+  - name: user
+    description: Object that represents the ratings given from and to users of the app
 paths:
-
-
   /users:
     post:
       tags:
-      - "user"
-      summary: "Add a new user to the database"
-      operationId: "addUser"
+        - user
+      summary: Add a new user to the database
+      operationId: addUser
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "User object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - in: body
+          name: body
+          description: User object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        405:
-          description: "Invalid input"
-        400:
-          description: "Server error"
-        200:
-          description: "Successful operation"
-    get:
-      tags: 
-      - "user"
-      summary: "Returns an array with all the users in the system"
-      operationId: "getUsers"
-      parameters: 
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
-      produces: 
-      - "application/json"
-      responses:
-        200:
-          description: "Successful operation"
-        400:
-          description: "Server error"
-          
-          
-  /users/{userId}:
+        '200':
+          description: Successful operation
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
     get:
       tags:
-      - "user"
-      summary: "Find user by ID"
-      description: "Returns a single user"
-      operationId: "getUserById"
-      produces:
-      - "application/json"
+        - user
+      summary: Returns an array with all the users in the system
+      operationId: getUsers
       parameters:
-      - name: "userId"
-        in: "path"
-        description: "ID of user to return"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      produces:
+        - application/json
       responses:
-        200:
-          description: "successful operation"
+        '200':
+          description: Successful operation
+        '400':
+          description: Server error
+  '/users/{userId}':
+    get:
+      tags:
+        - user
+      summary: Find user by ID
+      description: Returns a single user
+      operationId: getUserById
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to return
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/User"
-        400:
-          description: "Server error"
-        404:
-          description: "User not found"
+            $ref: '#/definitions/User'
+        '400':
+          description: Server error
+        '404':
+          description: User not found
     delete:
       tags:
-      - "user"
-      summary: "Deletes user by ID"
-      description: "Deletes a single user based on its id"
-      operationId: "deleteUserById"
+        - user
+      summary: Deletes user by ID
+      description: Deletes a single user based on its id
+      operationId: deleteUserById
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "userId"
-        in: "path"
-        description: "ID of user to delete"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
-      responses: 
-        200:
-          description: "successful operation"
-        400:
-          description: "Server error"
-        404:
-          description: "User not found"
+        - name: userId
+          in: path
+          description: ID of user to delete
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Server error
+        '404':
+          description: User not found
     put:
       tags:
-      - "user"
-      summary: "Updates an user by ID"
-      description: "Updates a single user based on its id"
-      operationId: "updateUserById"
-      consumes: 
-      - "application/json"
+        - user
+      summary: Updates an user by ID
+      description: Updates a single user based on its id
+      operationId: updateUserById
+      consumes:
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "userId"
-        in: "path"
-        description: "ID of user to update"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "body"
-        in: "body"
-        schema:
-          $ref: "#/definitions/User"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
-      responses: 
-        200:
-          description: "successful operation"
-        400:
-          description: "Server error"
-        404:
-          description: "User not found"
-          
-          
+        - name: userId
+          in: path
+          description: ID of user to update
+          required: true
+          type: integer
+          format: int64
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Server error
+        '404':
+          description: User not found
   /interests:
     get:
       tags:
-      - "interest"
-      summary: "Returns an array with all the interests in the system"
-      description: "Returns an array of all the interests stored in the db"
-      operationId: "getInterests"
+        - interest
+      summary: Returns an array with all the interests in the system
+      description: Returns an array of all the interests stored in the db
+      operationId: getInterests
       produces:
-      - "application/json"
-      parameters: 
-      - name: "x-apikey"
-        required: true
-        in: "header"
-        type: "string"
-      responses: 
-        200:
-          description: "Successfull operation"
-        400:
-          description: "Server error"
+        - application/json
+      parameters:
+        - name: x-apikey
+          required: true
+          in: header
+          type: string
+      responses:
+        '200':
+          description: Successfull operation
+        '400':
+          description: Server error
     post:
       tags:
-      - "interest"
-      summary: "Add a new interest to the database"
-      operationId: "addInterest"
+        - interest
+      summary: Add a new interest to the database
+      operationId: addInterest
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Interest object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/Interest"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - in: body
+          name: body
+          description: Interest object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Interest'
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        405:
-          description: "Invalid input"
-        400:
-          description: "Server error"
-        200:
-          description: "Successful operation"
-          
-          
-  /interests/{interestId}:
+        '200':
+          description: Successful operation
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  '/interests/{interestId}':
     get:
       tags:
-      - "interest"
-      summary: "Find interest by ID"
-      description: "Returns a single interest based in its id"
-      operationId: "getInterestById"
+        - interest
+      summary: Find interest by ID
+      description: Returns a single interest based in its id
+      operationId: getInterestById
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "interestId"
-        in: "path"
-        description: "ID of interest to return"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - name: interestId
+          in: path
+          description: ID of interest to return
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        200:
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/Interest"
-        400:
-          description: "Server error"
-        404:
-          description: "Interest not found"
+            $ref: '#/definitions/Interest'
+        '400':
+          description: Server error
+        '404':
+          description: Interest not found
     delete:
       tags:
-      - "interest"
-      summary: "Deletes interest by ID"
-      description: "Deletes a single interest based on its id"
-      operationId: "deleteInterestById"
+        - interest
+      summary: Deletes interest by ID
+      description: Deletes a single interest based on its id
+      operationId: deleteInterestById
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "interestId"
-        in: "path"
-        description: "ID of interest to return"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
-      responses: 
-        200:
-          description: "successful operation"
-        400:
-          description: "Server error"
-        404:
-          description: "Interest not found"
-          
-          
-  /users/{userId}/interests:
+        - name: interestId
+          in: path
+          description: ID of interest to return
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Server error
+        '404':
+          description: Interest not found
+  '/users/{userId}/interests':
     get:
       tags:
-      - "user-interest"
-      summary: "Find interest by user ID"
-      description: "Returns an array of user interests based on an user id"
-      operationId: "getInterestByUserId"
+        - user-interest
+      summary: Find interest by user ID
+      description: Returns an array of user interests based on an user id
+      operationId: getInterestByUserId
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "userId"
-        in: "path"
-        description: "ID of the user whose interests are to be returned"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - name: userId
+          in: path
+          description: ID of the user whose interests are to be returned
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        200:
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/Interest"
-        400:
-          description: "Server error"
-        404:
-          description: "Interest not found"
-  /users/{userId}/interests/{interestId}:  
+            $ref: '#/definitions/Interest'
+        '400':
+          description: Server error
+        '404':
+          description: Interest not found
+  '/users/{userId}/interests/{interestId}':
     post:
       tags:
-      - "user-interest"
-      summary: "Links an existing interests to an existing user"
-      operationId: "addInterestToUser"
+        - user-interest
+      summary: Links an existing interests to an existing user
+      operationId: addInterestToUser
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "userId"
-        in: "path"
-        description: "ID of the user whose interests are to be returned"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "interestId"
-        in: "path"
-        description: "ID of interests which is to be added to the user"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - name: userId
+          in: path
+          description: ID of the user whose interests are to be returned
+          required: true
+          type: integer
+          format: int64
+        - name: interestId
+          in: path
+          description: ID of interests which is to be added to the user
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        200:
-          description: "Successful operation"
-        400:
-          description: "Server error"
+        '200':
+          description: Successful operation
+        '400':
+          description: Server error
     delete:
       tags:
-      - "user-interest"
-      summary: "Deletes an interest from an user"
-      operationId: "deleteUserInterest"
+        - user-interest
+      summary: Deletes an interest from an user
+      operationId: deleteUserInterest
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "userId"
-        in: "path"
-        description: "ID of the user whose interests are to be returned"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "interestId"
-        in: "path"
-        description: "ID of interests which is to be deleted from the user"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - name: userId
+          in: path
+          description: ID of the user whose interests are to be returned
+          required: true
+          type: integer
+          format: int64
+        - name: interestId
+          in: path
+          description: ID of interests which is to be deleted from the user
+          required: true
+          type: integer
+          format: int64
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        200:
-          description: "Successful operation"
-        400:
-          description: "Server error"
+        '200':
+          description: Successful operation
+        '400':
+          description: Server error
   /ratings:
     get:
       tags:
-      - "ratings"
-      summary: "Retrieves all the ratings from the app"
-      operationId: "getRatings"
+        - ratings
+      summary: Retrieves all the ratings from the app
+      operationId: getRatings
       produces:
-      - "application/json"
-      parameters: 
-      - name: "to_user"
-        in: "query"
-        description: "retrieve ratings from a specific user by id"
-        type: "integer"
-        required: false
-      - name: "from_user"
-        in: "query"
-        description: "retrieve ratings to a specific user by id"
-        type: "integer"
-        required: false
-      - name: "x-apikey"
-        in: "header"
-        type: "string"
-        required: true
+        - application/json
+      parameters:
+        - name: to_user
+          in: query
+          description: retrieve ratings from a specific user by id
+          type: integer
+          required: false
+        - name: from_user
+          in: query
+          description: retrieve ratings to a specific user by id
+          type: integer
+          required: false
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
       responses:
-        200:
-          description: "Succesful operation"
+        '200':
+          description: Succesful operation
           schema:
-            $ref: "#/definitions/Rating"
-        400:
-          description: "Server error"
-  /users/{user_id}/ratings:
+            $ref: '#/definitions/Rating'
+        '400':
+          description: Server error
+  '/users/{user_id}/ratings':
     post:
-      tags: 
-      - "ratings"
-      summary: "Posts a new rating to a specific user"
-      operationId: "postRating"
-      produces: 
-      - "application/json"
-      parameters: 
-      - name: "x-apikey"
-        in: "header"
-        type: "integer"
-        required: true
-      - name: "user_id"
-        in: "path"
-        description: "ID of the user who is posting the review"
-        required: true
-        type: "integer"
-      - in: "body"
-        name: "body"
-        description: "Rating object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: '#/definitions/Rating'
+      tags:
+        - ratings
+      summary: Posts a new rating to a specific user
+      operationId: postRating
+      produces:
+        - application/json
+      parameters:
+        - name: x-apikey
+          in: header
+          type: integer
+          required: true
+        - name: user_id
+          in: path
+          description: ID of the user who is posting the review
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Rating object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Rating'
       responses:
-        200:
-          description: "Successful operation"
-        400:
-          description: "Server error"
-            
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
+        '200':
+          description: Successful operation
+        '400':
+          description: Server error
 definitions:
   User:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 45
       first_name:
-        type: "string"
-        example: "Jose"
+        type: string
+        example: Jose
       last_name:
-        type: "string"
-        example: "Clavero"
+        type: string
+        example: Clavero
       email:
-        type: "string"
-        example: "joseclamo@example.com"
+        type: string
+        example: joseclamo@example.com
       screen_name:
-        type: "string"
-        example: "josclamo"
+        type: string
+        example: josclamo
       date_of_birth:
-        type: "string"
-        format: "date"
-        example: "02/02/2014"
+        type: string
+        format: date
+        example: 02/02/2014
       user_type:
-        type: "integer"
+        type: integer
         example: 1
       share_personal_data:
-        type: "boolean"
+        type: boolean
         example: true
   Interest:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 45
       title:
-        type: "string"
-        example: "Craft beer"
+        type: string
+        example: Craft beer
   Rating:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 45
       score:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 6
       comments:
-        type: "string"
-        example: "the dinner was exquisite <3"
+        type: string
+        example: the dinner was exquisite <3
       from_user:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 1
       to_user:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 2
       event_id:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
         example: 3
-      
-
-    

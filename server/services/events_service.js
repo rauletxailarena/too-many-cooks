@@ -6,6 +6,7 @@ var express = require("express"),
     bodyParser = require('body-parser'),
     pg = require('pg'),
     events = require("../api/v1/events_service/events.js")
+    tags = require("../api/v1/events_service/tags.js")
     apiBasepath = "/api/v1"
 
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 // app routes
 app.use(apiBasepath + "/events", events)
+app.use(apiBasepath + "/tags", tags)
 
 
 app.get("/", function(req, res) {

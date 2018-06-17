@@ -157,7 +157,7 @@ router.put("/:id/interests", function(req, res) {
 
     // Parse the array that is coming in the query params
     var arr = req.body.interestsids
-    console.log("conten of arr", JSON.stringify(arr))
+    console.log("content of arr", JSON.stringify(arr))
 
     // Delete all the user interests of the specific user
     dbQuery("DELETE FROM user_interests WHERE user_id = $1",

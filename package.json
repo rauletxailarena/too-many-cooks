@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^6.5.1",
     "body-parser": "^1.18.2",
+    "delay": "^3.0.0",
     "express": "^4.16.3",
     "express-logger": "0.0.3",
     "express-oas-generator": "^0.1.25",
@@ -21,6 +23,8 @@
     "help": "^3.0.2",
     "jade": "^1.11.0",
     "logger": "0.0.1",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.1.5",
     "nodemon": "^1.17.2",
     "npm": "^5.10.0",
     "pg": "^7.4.1",
