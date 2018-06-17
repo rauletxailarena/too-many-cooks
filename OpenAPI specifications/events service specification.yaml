@@ -1,0 +1,302 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is my 'events' microservice API. In here you can explore and play around with the different operations provided by this microservice.
+  version: 1.0.0
+  title: Events microservice
+  contact:
+    email: jraulruizgarcia@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+# host: rauletxailarena-eval-test.apigee.net
+host: localhost:3002
+# basePath: /toomanycooks/api/v1
+basePath: /api/v1
+schemes:
+  - http
+  - https
+tags:
+  - name: event
+    description: Object that represents an event to which the users can assist 
+  - name: tag
+    description: Object that defines specific tags that users can assign to events or use as filters to search for specific types of events
+  - name: location
+    description: Object that holds information concerning to the location of a specific event, such as its coordinates, address, postcode, etc.
+
+
+paths:
+  /events:
+    get:
+      tags:
+        - event
+      summary: Retrieves an array with all the events currently in the database
+      operationId: getEvents
+      produces:
+        - application/json
+      parameters: 
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+          description: Successful operation
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+    post:
+      tags:
+        - event
+      summary: Adds a specific events, its location and tag_ids to their respective collections
+      operationId: postEvent
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters: 
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - in: body
+          name: body
+          description: User object that needs to be added to the database
+          required: true
+          schema:
+            $ref: "#/definitions/Event_POST"
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              event:
+                $ref: "#/definitions/Event"
+              location:
+                $ref: "#/definitions/Location"
+            
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  /events/{event_id}:
+    get:
+      tags: 
+        - event
+      summary: Retrieves a single document containing one event
+      operationId: getEventById
+      produces:
+        - application/json
+      parameters: 
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - name: event_id
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Event"
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  /events/{event_id}/users/{user_id}:
+    post:
+      tags: 
+        - event
+      summary: Adds a unser to a specific event with await approval state
+      operationId: postUserToEvent
+      produces:
+        - application/json
+      parameters: 
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - name: event_id
+          in: path
+          type: string
+          required: true
+        - name: user_id
+          in: path
+          required: true
+          type: number
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Event"
+            
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+    
+    put:
+      tags: 
+        - event
+      summary: Updates a user in a specific event setting his state to approved or rejected 
+      operationId: putUserToEvent
+      produces:
+        - application/json
+      consumes: 
+        - application/json
+      parameters: 
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - name: event_id
+          in: path
+          type: string
+          required: true
+        - name: user_id
+          in: path
+          required: true
+          type: number
+        - in: body
+          name: status
+          description: Status to which the user is going to be set
+          required: true
+          schema:
+            $ref: "#/definitions/Status"
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Event"
+            
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  /tags:
+    get:
+      tags:
+        - tag
+      summary: Retrieves an array with all the tags currently in the database
+      operationId: getTags
+      produces:
+        - application/json
+      parameters: 
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+          description: Successful operation
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+ 
+ 
+definitions:
+  Location:
+    type: object
+    properties:
+      latitude:
+        type: number
+        example: -3.09564
+      longitude:
+        type: number
+        example: 41.32435
+      postcode:
+        type: string
+        example: EH11 1HD
+      address:
+        type: string
+        example: 7 Duff Road
+      city:
+        type: string
+        example: Edinburgh
+      description :
+        type: string
+        example: The small house on the bridge
+      
+  Event:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: 5b25753b3a286a392cccc58c
+      host_id:
+        type: number
+        example: 3
+      location_id:
+        type: string 
+        example: 5b2575383a286a392cccc57f
+      title:
+        type: string 
+        example: Burritos with Irene
+      description:
+        type: string 
+        example: Get eady for a full-on Mexican evening!
+      type: 
+        type: number
+        example: 2
+      start_date:
+        type: string
+        format: date
+        example: 02/02/2014
+      slots:
+        type: number 
+        example: 5
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+      assistants:
+        type: array
+        items: 
+          properties:
+            _id: 
+              type: string
+              example: 5b2575383a286a392cccc57f
+            user_id: 
+              type: number
+              example: 3
+            status:
+              type: number
+              example: 3
+  Event_POST:
+    type: object 
+    properties:
+      event:
+        $ref: '#/definitions/Event'
+      location:
+        $ref: '#/definitions/Location'
+  Tag:
+    type: object
+    properties:
+      id:
+        type: string 
+        example: 5b2575383a286a392cccc57f
+        
+  Status:
+    type: object 
+    properties:
+      status:
+        type: number
+        example: 2
+
+
+      
+    
+      

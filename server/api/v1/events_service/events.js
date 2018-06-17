@@ -1,7 +1,9 @@
 var express = require("express")
 var router = express.Router()
-var dbQuery = require("../../../db/postgres_connection.js").events_query
 var aggregator_helper = require("./aggregator_helper.js")
+var models = require("../../../db/mongoose_connection.js")
+var mongoose = require("mongoose")
+
 
 router.use(function timeLog (req,res,next) {
   console.log("Time: " + Date.now())
@@ -13,154 +15,129 @@ router.use(function timeLog (req,res,next) {
 
 // get all events
 router.get("/", function (req, res) {
-
-  if (Object.keys(req.query).length !== 0) {
-    dbQuery("select events.*, tags.title AS tag_title, locations.latitude, locations.longitude, locations.postcode, locations.address, locations.city, locations.description AS location_description from events JOIN event_tags ON (events.id = event_id) JOIN tags ON (tag_id = tags.id) JOIN locations ON (locations.id = events.location_id);",
-    [], function(err, result) {
-      if (err) {
-        res.status(400)
-        res.send(err)
-      } else {
-        const rowsReturned = []
-        result.rows.forEach(function(row) {
-          rowsReturned.push(row);
-        })
-        var aggregated_users = aggregator_helper(rowsReturned)
-        res.send(aggregated_users)
-      }
-    })
-  }
-  else
-  {
-    dbQuery("SELECT * FROM events", [], function(err, result) {
-      if (err) {
-        res.status(400)
-        res.send(err)
-      } else {
-        const rowsReturned = []
-        result.rows.forEach(function(row) {
-          rowsReturned.push(row);
-        })
-        res.send(rowsReturned)
-      }
-    })
-  }
-})
-
-//GET all event_tags
-
-router.get("/tags", function(req,res) {
-  dbQuery("SELECT * FROM event_tags", [], function(err, result) {
+  models.event_model.
+  find({}).
+  populate('tags').
+  populate('location_id').
+  exec(function (err, result) {
     if (err) {
-      res.send(err)
+      res.status(400)
+       res.send(err)
     } else {
-      const rowsReturned = []
-      result.rows.forEach(function(row) {
-        rowsReturned.push(row);
-      })
-      res.send(rowsReturned)
+      res.send(result)
     }
   })
 })
 
-router.get("/:event_id/users", function(req,res) {
-  dbQuery("SELECT * FROM event_assistants WHERE event_id = $1", [req.params.event_id], function(err, result) {
+// get event by id
+router.get("/:event_id", function(req,res) {
+  var event_id = req.params.event_id;
+  models.event_model.
+  findOne({"_id": event_id}).
+  populate('tags').
+  populate('location_id').
+  exec(function (err, result) {
     if (err) {
-      res.send(err)
+      res.status(400)
+       res.send(err)
     } else {
-      const rowsReturned = []
-      result.rows.forEach(function(row) {
-        rowsReturned.push(row);
-      })
-      res.send(rowsReturned)
+      res.send(result)
     }
   })
 })
+
+// POST Routes
 
 // Store a new event, with location and tags to DB
 router.post("/", function(req, res) {
   // Get hold of the body of the request:
-  var event_to_store = req.body.event;
-  var location_to_store = req.body.location;
-  var tag_ids = req.body.event.tag_ids;
+  var event_from_body = req.body.event;
+  var location_from_body = req.body.location;
+  var tags_from_body = req.body.event.tag_ids;
 
   // Store the location first to get the id
-  dbQuery("INSERT INTO locations (latitude, longitude, postcode, address, city, description) VALUES ($1, $2, $3, $4, $5, $6) returning *",
-  [location_to_store.latitude, location_to_store.longitude, location_to_store.postcode, location_to_store.address, location_to_store.city, location_to_store.description],
-  function(err, result) {
+  var location = new models.location_model({
+     "_id": new mongoose.Types.ObjectId(),
+     "latitude": location_from_body.latitude,
+     "longitude": location_from_body.longitude,
+     "postcode": location_from_body.postcode,
+     "address": location_from_body.address,
+     "city": location_from_body.city,
+     "description": location_from_body.description,
+   })
+
+   models.location_model.create(location)
+
+  var event_to_store = {
+    "host_id":event_from_body.host_id ,
+    "location_id": location._id,
+    "title":event_from_body.title,
+    "description": event_from_body.description,
+    "type": event_from_body.type,
+    "start_date": new Date(event_from_body.start_date),
+    "slots":event_from_body.slot,
+    "assistants": [],
+    "tags": event_from_body.tag_ids
+  }
+
+  models.event_model.create(event_to_store)
+  res.send(req.body)
+})
+
+// POST an assistant to an event as pending approval
+router.post("/:event_id/users/:user_id", function (req, res) {
+  var event_id = req.params.event_id
+  var user_id = req.params.user_id
+  models.event_model.findOne({"_id": event_id}).
+  exec(function (err, event_to_modify) {
     if (err) {
       res.status(400)
       res.send(err)
     } else {
-      res.set('Access-Control-Allow-Origin', '*')
-      var location_id = result.rows[0].id
-      var location_stored = result.rows[0]
-
-
-      // Store the event once we obtain the location id
-      dbQuery("INSERT INTO events (host_id, location_id, title, description, type, start_date, slots) VALUES ($1, $2, $3, $4, $5, TO_DATE($6, 'DD/MM/YYYY'), $7) returning *",
-      [event_to_store.host_id, location_id, event_to_store.title, event_to_store.description, event_to_store.type, event_to_store.start_date, event_to_store.slots],
-      function(err, result) {
+      var newUser = {
+        "_id": new mongoose.Types.ObjectId(),
+        "user_id": user_id,
+        "status": 1
+      }
+      event_to_modify.assistants.push(newUser)
+      models.event_model.findOneAndUpdate({"_id": event_id}, event_to_modify, function(err, event) {
         if (err) {
+          res.status(400)
           res.send(err)
-        }
-        else {
-          var event_stored = result.rows[0]
-          var object_to_return = {
-            "event": event_stored,
-            "location": location_stored
-          }
-          res.send({"event": event_stored,"location": location_stored })
-          tag_ids.forEach(function(tag_id) {
-            dbQuery("INSERT INTO event_tags (event_id, tag_id) VALUES ($1, $2) returning *",
-            [event_stored.id, tag_id],
-            function(err, result) {
-              if (err) {
-                res.send(err)
-              }
-              else {
-                console.log(result.rows[0])
-              }
-            })
-          })
-
+        } else {
+          res.send(event_to_modify)
         }
       })
     }
   })
 })
 
-// POST an assistant to an event as pending approval
-router.post("/:event_id/users/:user_id", function (req, res) {
-  dbQuery("INSERT INTO event_assistants (event_id, user_id, status) VALUES ($1, $2, $3) returning *;",
-  [req.params.event_id, req.params.user_id, 1],
-  function(err, result) {
-    if (err) {
-      res.status(400)
-      res.send(err)
-    } else if ("rows" in result) {
-        res.send(result.rows[0])
-    } else {
-      res.set('Access-Control-Allow-Origin', '*')
-      res.send(result)
-    }
-  })
-})
-
+// PUT Routes
 
 // PUT an assistant to an event as approved or rejected
 router.put("/:event_id/users/:user_id", function (req, res) {
-  dbQuery("UPDATE event_assistants SET status = $1 WHERE event_id = $2 AND user_id = $3 returning *;",
-  [req.body.status, req.params.event_id, req.params.user_id],
-  function(err, result) {
+  var event_id = req.params.event_id
+  var user_id = req.params.user_id
+  var status = req.body.status
+  models.event_model.findOne({"_id": event_id}).
+  exec(function (err, event_to_modify) {
     if (err) {
       res.status(400)
       res.send(err)
-    } else if ("rows" in result) {
-        res.send(result.rows[0])
     } else {
-      res.set('Access-Control-Allow-Origin', '*')
-      res.send(result)
+      for (i=0; i<event_to_modify.assistants.length; i++) {
+        if (event_to_modify.assistants[i].user_id == user_id) {
+          event_to_modify.assistants[i].status = status
+          models.event_model.findOneAndUpdate({"_id": event_id}, event_to_modify, function(err, event) {
+            if (err) {
+              res.status(400)
+              res.send(err)
+            } else {
+              res.send(event_to_modify)
+            }
+          })
+        }
+      }
     }
   })
 })

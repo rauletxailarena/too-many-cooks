@@ -1,19 +1,15 @@
 var express = require("express")
 var router = express.Router()
-var dbQuery = require("../../../db/postgres_connection.js").events_query
+var models = require("../../../db/mongoose_connection.js")
 
 router.get("/", function(req, res) {
-  dbQuery("select * from tags;",
-  [], function(err, result) {
+
+  models.tag_model.find({}, function(err, result ) {
     if (err) {
       res.status(400)
       res.send(err)
     } else {
-      const rowsReturned = []
-      result.rows.forEach(function(row) {
-        rowsReturned.push(row);
-      })
-      res.send(rowsReturned)
+      res.send(result)
     }
   })
 })
