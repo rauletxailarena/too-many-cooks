@@ -51,6 +51,7 @@ function printIds() {
   models.event_model.create({
     host_id: 1,
     location_id: location_ids[0],
+    image_url: "https://www.seriouseats.com/recipes/images/2015/05/Anova-Steak-Guide-Sous-Vide-Photos15-beauty-1500x1125.jpg",
     title:'Learn how to cook tapas with Pancho',
     description: 'A workshop in which our Spanish chef will introduce you into the tapas world',
     type: 1,
@@ -70,6 +71,7 @@ function printIds() {
   models.event_model.create({
     host_id: 2,
     location_id: location_ids[1],
+    image_url: "https://www.seriouseats.com/recipes/images/2015/05/Anova-Steak-Guide-Sous-Vide-Photos15-beauty-1500x1125.jpg",
     title:'Night out with beer tasting',
     description: 'We will learn how to appreciate different beer ingredients and flavours',
     type: 2,
@@ -91,15 +93,26 @@ function printIds() {
     host_id: 3,
     location_id: location_ids[2],
     title:'Steak feast masterclass',
+    image_url: "https://www.seriouseats.com/recipes/images/2015/05/Anova-Steak-Guide-Sous-Vide-Photos15-beauty-1500x1125.jpg",
     description: 'Rare, medium-rare or medium-well. However you like your steaks, this is your event',
     type: 1,
     start_date: new Date('2019-11-17'),
     slots:8,
     assistants: [
       {
-        user_id:3,
+        user_id:1,
+        status:1
+      },{
+        user_id:2,
+        status:1
+      },{
+        user_id:4,
+        status:2
+      },{
+        user_id:5,
         status:2
       }
+
     ],
     tags: [
       tag_ids[1],
@@ -108,10 +121,11 @@ function printIds() {
   })
 
   models.event_model.create({
-    host_id: 4,
+    host_id: 3,
     location_id: location_ids[3],
     title:'Cupcake competition',
     description: 'Come with your cupcakes ready to take part in this fun competition',
+    image_url: "https://www.seriouseats.com/recipes/images/2015/05/Anova-Steak-Guide-Sous-Vide-Photos15-beauty-1500x1125.jpg",
     type: 1,
     start_date: new Date('2018-10-17'),
     assistants: [

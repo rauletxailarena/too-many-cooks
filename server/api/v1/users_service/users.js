@@ -15,7 +15,7 @@ router.get("/", function (req, res) {
   {
     //In case of an OPTIONS, we allow the access to the origin of the petition
     res.AddHeader("Access-Control-Allow-Origin", "*");
-    res.AddHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE");
+    res.AddHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
     res.AddHeader("Access-Control-Allow-Headers", "accept, content-type");
     res.AddHeader("Access-Control-Max-Age", "1728000");
   }

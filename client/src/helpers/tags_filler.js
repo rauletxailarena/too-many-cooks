@@ -1,5 +1,4 @@
 var request_helper = require('./request_helper')
-var request_helper = require('./request_helper')
 
 var url = "http://localhost:3002/api/v1/tags"
 

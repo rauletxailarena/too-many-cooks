@@ -33,6 +33,7 @@ var EventSchema = new mongoose.Schema({
     min: 0,
     max: 2
   },
+  image_url: String,
   start_date: Date,
   slots: Number,
   assistants: [

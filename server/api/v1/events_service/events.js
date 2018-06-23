@@ -15,18 +15,51 @@ router.use(function timeLog (req,res,next) {
 
 // get all events
 router.get("/", function (req, res) {
-  models.event_model.
-  find({}).
-  populate('tags').
-  populate('location_id').
-  exec(function (err, result) {
-    if (err) {
-      res.status(400)
-       res.send(err)
-    } else {
-      res.send(result)
+  if (Object.keys(req.query).length !== 0) {
+    if ("user_id" in req.query) {
+      var user_id = req.query.user_id;
+      models.event_model.
+      find({"assistants.user_id" : user_id}).
+      populate('tags').
+      populate('location_id').
+      exec(function (err, result) {
+        if (err) {
+          res.status(400)
+           res.send(err)
+        } else {
+          res.send(result)
+        }
+      })
+    } else if ("host_id" in req.query) {
+      var host_id = req.query.host_id
+      models.event_model.
+      find({"host_id" : host_id}).
+      populate('tags').
+      populate('location_id').
+      exec(function (err, result) {
+        if (err) {
+          res.status(400)
+           res.send(err)
+        } else {
+          res.send(result)
+        }
+      })
     }
-  })
+  }
+  else {
+    models.event_model.
+    find({}).
+    populate('tags').
+    populate('location_id').
+    exec(function (err, result) {
+      if (err) {
+        res.status(400)
+         res.send(err)
+      } else {
+        res.send(result)
+      }
+    })
+  }
 })
 
 // get event by id
@@ -72,6 +105,7 @@ router.post("/", function(req, res) {
     "host_id":event_from_body.host_id ,
     "location_id": location._id,
     "title":event_from_body.title,
+    "image_url": event_from_body.image_url,
     "description": event_from_body.description,
     "type": event_from_body.type,
     "start_date": new Date(event_from_body.start_date),

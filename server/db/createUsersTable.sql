@@ -60,6 +60,10 @@ VALUES ('TestUser1', 'TestUser1Surname', 'test1@gmail.com', 'test1', '20/02/1988
 INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details)
 VALUES ('TestUser2', 'TestUser2Surname', 'test2@gmail.com', 'test2', '20/02/1988', 'test2', 1, 'true');
 
+INSERT INTO users (first_name, last_name, email, password, date_of_birth, user_name, user_type, share_personal_details )
+VALUES ('TestUser5', 'User5 surname', 'somemail@gmail.com', 'roboto', '28/04/1988', 'sgsfdg', 1, 'true');
+
+
 -- tags seeding:
 
 INSERT INTO interests (title)

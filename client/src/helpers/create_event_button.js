@@ -59,6 +59,7 @@ var create_event_button = function() {
       "title": document.getElementById("event-title-input").value,
       "description": document.getElementById("event-description-input").value,
       "type": document.getElementById("event-type-select").value,
+      "image_url": document.getElementById("event-image-url-input").value,
       "start_date": date_string,
       "slots": document.getElementById("create-event-slot-picker").value,
       "tag_ids": tag_ids

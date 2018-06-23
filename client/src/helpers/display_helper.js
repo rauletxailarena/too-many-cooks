@@ -30,7 +30,6 @@ function display_helper() {
         event.style.display = "none"
       }
     })
-    console.log(wrappers)
   }
 
 }
