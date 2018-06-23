@@ -1,0 +1,211 @@
+.bordered{
+  border: 3px solid grey;
+  border-radius: 25px;
+}
+
+.center {
+    text-align: center;
+}
+
+.container-search-event{
+  display: flex;
+  width:  90%;
+  margin: auto;
+  margin-top: 10%;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.container-search-event div {
+  padding: 5px;
+  width:  90%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.search-event-column-1{
+  flex: 4;
+  min-width: 350px;
+}
+
+.search-event-column-2{
+  flex: 9;
+}
+
+.label {
+  border: 30px round black;
+  background-color: #e8eaed;
+  padding: 5px;
+  text-align: center;
+  border-radius: 25px
+}
+
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.search-date-box-row{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.search-event-column-2 {
+  min-width: 500px;
+}
+
+.search-event-column-1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.tags-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+
+img {
+  width: 100%;
+  border: 2%;
+}
+
+.search-button-wrapper {
+  display: flex;
+  justify-content: center;
+  border: auto;
+}
+
+.event-found-container {
+  display: flex;
+  width:  90%;
+  margin: auto;
+  margin-top: 10%;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.event-found-first-row {
+  display: flex;
+  width:  90%;
+  margin-left: 2%;
+  margin-right: 2%;
+  align-items: center;
+  justify-content: flex-end;
+
+}
+
+.event-found-first-row-item {
+  flex: 5;
+  margin: auto;
+}
+
+.small-item{
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-found-second-row {
+  display: flex;
+  flex-direction: row;
+  margin: 6px;
+}
+
+.event-found-second-row-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 4px;
+  /* max-width: 200px; */
+}
+
+#event-status-wrapper{
+display: flex;
+flex-direction: column;
+}
+
+.manage-my-events-container{
+  display: flex;
+  width:  90%;
+  margin: auto;
+  margin-top: 10%;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.manage-my-events-row {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  justify-content: space-around;
+}
+
+.manage-my-events-row-item{
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  flex:1;
+}
+
+.guests-select-wrapper {
+  display: flex;
+}
+
+.accept-reject-guests-buttons-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.create-event-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+}
+
+.create-event-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 3%;
+  flex-wrap: wrap;
+}
+
+.small-flex {
+  background-co÷lor: green;
+  display: flex;
+  flex: 1;
+}
+
+.create-event-row input, textarea, select {
+  display: flex;
+  flex: 5;
+}

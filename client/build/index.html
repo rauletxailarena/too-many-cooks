@@ -8,7 +8,7 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script type="text/javascript" src="bundle.js"></script>
@@ -30,10 +30,16 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Customise profile</a>
+          <a class="nav-link" href="#" id="customise-profie-nav-link">Customise profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Search events</a>
+          <a class="nav-link" href="#" id="manage-events-nav-link">Manage events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="create-event-nav-link">Create a new event</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="search-event-nav-link">Search events</a>
         </li>
 
       </ul>
@@ -42,12 +48,11 @@
   </header>
 
   <div class="container">
-    <div class="row">
-      <h1>Welcome to too many cooks!</h1>
-    </div>
+    <h1 align="center">Too many cooks</h1>
   </div>
 
   <div id="welcome-page-wrapper" class="container">
+    <h3 align="center">Log in or sign up</h3>
     <div class="row">
       <div id="sign-up-wrapper" class="col-sm-6">
 
@@ -109,10 +114,8 @@
 
   </div>
 
-
-
-
   <div id="profile-page-wrapper" class="container">
+    <h3 align="center">Customise your profile</h3>
     <div class="row">
       <div id="personal-details-wrapper" class="col-sm-6">
 
@@ -171,19 +174,278 @@
 
         <div id="profile-page-buttons-wrapper">
           <div id="update-profile-button-wrapper">
-            <button id="update-profile-button">Update profile</button>
+            <button id="update-profile-button" class="btn btn-outline-primary">Update profile</button>
           </div>
           <div id="search-for-events-button-wrapper">
-            <button id="search-for-events-button">Search for events!</button>
+            <button id="search-for-events-button" class="btn btn-outline-primary">Search for events!</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div id="create-event-page-wrapper">
+    <h3 align="center">Create a new event</h3>
+    <div class="create-event-container bordered">
+      <div class="create-event-row">
+        <h3>Create a new event</h3>
+      </div>
+      <div class="create-event-row">
+        <label for="event-title-input" class="small-flex">Title</label>
+        <input type="text" id="event-title-input" placeholder="Title">
+      </div>
+      <div class="create-event-row">
+        <label for="event-description-input" class="small-flex">Description</label>
+        <textarea  rows="8" cols="80" id="event-description-input" placeholder="Enter a description for your event"></textarea>
+      </div>
+
+      <div class="create-event-row">
+          <label for="create-event-slot-picker">How many people can attend?</label>
+         <input type="number" id="create-event-slot-picker" min="1" max="99">
+      </div>
+
+      <div class="create-event-row" id="create-event-tags-container">
+        
+      </div>
+
+      <div class="create-event-row">
+        <label for="event-type-select" class="small-flex">Event type</label>
+        <select  id="event-type-select">
+          <option value="1">Free event</option>
+          <option value="2">Paid event</option>
+        </select>
+      </div>
+
+      <div class="create-event-row">
+        <p>Location</p>
+      </div>
+
+      <div class="create-event-row">
+        <label for="event-address-input" class="small-flex">Adress</label>
+        <input type="text" id="event-address-input" placeholder="Adress">
+      </div>
+
+      <div class="create-event-row">
+        <label for="event-postcode-input" class="small-flex">Postcode</label>
+        <input type="text" id="event-postcode-input" placeholder="Postcode">
+      </div>
+
+      <div class="create-event-row">
+        <label for="event-city-input" class="small-flex">City</label>
+        <input type="text" id="event-city-input" placeholder="City">
+      </div>
+
+      <div class="create-event-row">
+        <label for="event-date-input" class="small-flex">Date</label>
+        <input type="date" id="event-date-input" placeholder="Date">
+      </div>
+
+      <div class="create-event-row">
+        <label for="event-time-input" class="small-flex">Time</label>
+        <input type="time" id="event-time-input" placeholder="Time">
+      </div>
+
+      <div class="create-event-row">
+        <button type="button" id="create-event-button">Create event</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="manage-events-page-wrapper">
+    <h3 align="center">Manage your upcoming events</h3>
+    <div class="event-found-container bordered">
+      <div class="event-found-first-row">
+        <div class="event-found-first-row-item">
+          <img src="https://www.seriouseats.com/recipes/images/2015/05/Anova-Steak-Guide-Sous-Vide-Photos15-beauty-1500x1125.jpg" alt="">
+        </div>
+        <div class="event-found-first-row-item">
+          <div class="event-title">
+            <h1>Steak night</h1>
+          </div>
+          <div class="event-description">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+        <div class="event-found-first-row-item small-item" id="event-status-wrapper-2">
+          <label for="status-input-2">Event status</label>
+          <input type="text" id="status-input-2" value="Pending approval" disabled="true">
+        </div>
+      </div>
+      <div class="event-found-second-row">
+        <div class="event-found-second-row-item">
+          <label for="event-date-field-2">Event date</label>
+          <input type="text" id=event-date-field-2 value="28-Dec" disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-time-field-2">Event time</label>
+          <input type="text" id=event-time-2 value="7pm." disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-available-spaces-field-2">Available places</label>
+          <input type="text" id=event-availabe-spaces-field-2 value="3" disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-location-field-2">Location</label>
+          <input type="text" id=event-location-field-2 value="7 Duff Road" disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-host-field-2">Host</label>
+          <input type="text" id=event-host-field-2 value="28-Dec" disabled=true>
+        </div>
+      </div>
+    </div>
+
+    <div class="manage-my-events-container bordered">
+      <div class="manage-my-events-row">
+        <p>Manage my events</p>
+      </div>
+      <div class="manage-my-events-row">
+        <div class="manage-my-events-row-item">
+          <h4>Select an event</h2>
+          <button type="button" id="event-button-sushi">Sushi with friends</button>
+        </div>
+        <div class="manage-my-events-row-item">
+          <h4>Going:</h2>
+          <input type="text" id="going-field-raul" disabled="true">Raul</input>
+          <input type="text" id="going-field-irene" disabled="true">Irene</input>
+        </div>
+        <div class="manage-my-events-row-item">
+          <h4>Spaces left:</h2>
+          <input type="text" id="spaces-left-field" disabled="true" value="4"></input>
+        </div>
+        <div class="manage-my-events-row-item">
+          <h4>Pending approval:</h2>
+            <div class="guests-select-wrapper">
+              <select  name="">
+                <option value="Jose">Jose</option>
+                <option value="Simon">Simon</option>
+              </select>
+              <div class="accept-reject-guests-buttons-wrapper">
+                <button type="button" id="accept-guest-button">Accept</button>
+                <button type="button" id="reject-guest-button">Reject</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="search-events-page-wrapper">
+    <h3 align="center">Seach for upcoming events</h3>
+    <div class="container-search-event">
+      <div class="search-event-column-1 bordered">
+
+        <div class="location-box">
+          <div>
+            <p class="label">Location</p>
+          </div>
+          <div >
+            <label for="postcode-search">Enter your postcode:</label>
+            <input class="normal-border" type="text" id="postcode-search" placeholder="Postcode">
+          </div>
+          <div>
+            <label for="distance-slider">Distance:</label>
+            <input id="distance-slider"type="range" min="1" max="20" value="5">
+          </div>
+        </div>
+
+        <div class="date-box">
+          <div>
+            <p class="label">Dates</p>
+          </div>
+          <div class="search-date-box-row">
+            <div class="search-date-box-column-1">
+              <label for="search-date-box-from-date">From date:</label>
+              <input id ="search-date-box-from-date" type="date" name="search-date-box-from-date" value="">
+            </div>
+            <div class="search-date-box-column-2">
+              <label for="search-date-box-to-date">To date:</label>
+              <input id ="search-date-box-to-date" type="date" name="search-date-box-to-date" value="">
+            </div>
+          </div>
+        </div>
+
+        <div class="tags-box">
+          <div>
+            <p class="label">Dates</p>
+          </div>
+          <div class="tags-wrapper">
+            <div class="tag-checkbox">
+              <label for="meat">meat</label>
+              <input type="checkbox" id="meat" value="">
+            </div>
+            <div class="tag-checkbox">
+              <label for="pizza">pizza</label>
+              <input type="checkbox" id="pizza" value="">
+            </div>
+            <div class="tag-checkbox">
+              <label for="noodles">noodles</label>
+              <input type="checkbox" id="noodles" value="">
+            </div>
+            <div class="tag-checkbox">
+              <label for="tapas">tapas</label>
+              <input type="checkbox" id="tapas" value="">
+            </div>
+            <div class="tag-checkbox">
+              <label for="thai">thai</label>
+              <input type="checkbox" id="thai" value="">
+            </div>
+          </div>
+          <div class="search-button-wrapper">
+            <input type="button" id="search-button" value="Hello">
+          </div>
+        </div>
+
+      </div>
+      <div class="search-event-column-2 bordered">
+        <img src="http://oobrien.com/wordpress/wp-content/uploads/2016/07/googlemaps_july2016.jpg">
+      </div>
+
+    </div>
 
 
 
-
-
+    <div class="event-found-container bordered">
+      <div class="event-found-first-row">
+        <div class="event-found-first-row-item">
+          <img src="https://www.seriouseats.com/recipes/images/2015/05/Anova-Steak-Guide-Sous-Vide-Photos15-beauty-1500x1125.jpg" alt="">
+        </div>
+        <div class="event-found-first-row-item">
+          <div class="event-title">
+            <h1>Steak night</h1>
+          </div>
+          <div class="event-description">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+        <div class="event-found-first-row-item small-item">
+          <button type="button" id="event-sign-up-button">Sign up!</button>
+        </div>
+      </div>
+      <div class="event-found-second-row">
+        <div class="event-found-second-row-item">
+          <label for="event-date-field">Event date</label>
+          <input type="text" id=event-date-field value="28-Dec" disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-time-field">Event time</label>
+          <input type="text" id=event-date-time value="7pm." disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-available-spaces-field">Available places</label>
+          <input type="text" id=event-availabe-spaces-field value="3" disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-location-field">Location</label>
+          <input type="text" id=event-location-field value="7 Duff Road" disabled=true>
+        </div>
+        <div class="event-found-second-row-item">
+          <label for="event-host-field">Host</label>
+          <input type="text" id=event-host-field value="28-Dec" disabled=true>
+        </div>
+      </div>
+    </div>
   </div>
 
 
