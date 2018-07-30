@@ -1,21 +1,7 @@
+// requestHelper is a helper class that will be used to streamline the HTTP request
+// outgoing from the app to the different services
+
 var requestHelper = {}
-
-requestHelper.getRequest = function (url, callback) {
-  var xhr = new XMLHttpRequest()
-  xhr.open('GET', url)
-
-  xhr.addEventListener('load', function () {
-    var jsonString = xhr.responseText
-    var data = JSON.parse(jsonString)
-    callback(data)
-  })
-
-  xhr.send()
-}
-
-requestHelper.getRequest = function (url, callback) {
-  this.getRequestWithHeaders(url, [], callback)
-}
 
 requestHelper.getRequestWithHeaders = function (url, headerArray, query_params, callback) {
   var xhr = new XMLHttpRequest()
@@ -37,12 +23,10 @@ requestHelper.getRequestWithHeaders = function (url, headerArray, query_params, 
     var data = JSON.parse(jsonString)
     callback(data)
   })
-
   xhr.send()
 }
 
 requestHelper.postRequestWithHeaders = function (url, headerArray, payload, callback) {
-  // console.log("Request Helper, Get Request With Headers, This is", this)
   var xhr = new XMLHttpRequest()
   xhr.open('POST', url)
 
@@ -58,12 +42,10 @@ requestHelper.postRequestWithHeaders = function (url, headerArray, payload, call
     var data = JSON.parse(jsonString)
     callback(data, status)
   })
-
   xhr.send(payload)
 }
 
 requestHelper.putRequestWithHeaders = function (url, headerArray, payload, callback) {
-  // console.log("Request Helper, Get Request With Headers, This is", this)
   var xhr = new XMLHttpRequest()
   xhr.open('PUT', url)
 
@@ -79,43 +61,9 @@ requestHelper.putRequestWithHeaders = function (url, headerArray, payload, callb
     var data = JSON.parse(jsonString)
     callback(data, status)
   })
-
   xhr.send(payload)
 }
 
-requestHelper.postRequest = function (url, callback, payload) {
-  var xhr = new XMLHttpRequest()
-  xhr.open('POST', url)
-
-  xhr.addEventListener('load', function () {
-    if (xhr.status !== 200) return
-    var jsonString = xhr.responseText
-    var data = JSON.parse(jsonString)
-    callback(data)
-  })
-
-  xhr.setRequestHeader('Content-Type', 'application/json')
-
-  var jsonString = JSON.stringify(payload)
-  xhr.send(jsonString)
-}
-
-requestHelper.deleteRequest = function (url, callback) {
-  var xhr = new XMLHttpRequest()
-  xhr.open('DELETE', url)
-
-  xhr.addEventListener('load', function () {
-    // if (xhr.status !== 200) return
-    var jsonString = xhr.responseText
-    var data = JSON.parse(jsonString)
-    callback(data)
-  })
-
-  // xhr.setRequestHeader('Content-Type', 'application/json')
-
-  // var jsonString = JSON.stringify(payload)
-  xhr.send("")
-}
 
 
 module.exports = requestHelper

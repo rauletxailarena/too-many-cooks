@@ -5,10 +5,21 @@ var session_info = require('./session_info')
 
 var navbar_links = function() {
 
-  var customise_profile=  document.getElementById("customise-profie-nav-link");
+  var customise_profile= document.getElementById("customise-profie-nav-link");
   var manage_events= document.getElementById("manage-events-nav-link");
   var create_event= document.getElementById("create-event-nav-link");
   var search_event= document.getElementById("search-event-nav-link");
+  var home = document.getElementById("home-nav-link")
+  var too_many_cooks = document.getElementById("too-many-cooks-nav-link")
+
+  too_many_cooks.addEventListener("click", function() {
+    console.log(session_info.user_id)
+  })
+
+  home.addEventListener("click", function() {
+    console.log("Home clicked")
+    display_helper.show_only("welcome-page-wrapper")
+  })
 
   customise_profile.addEventListener("click", function() {
     display_helper.show_only("profile-page-wrapper")

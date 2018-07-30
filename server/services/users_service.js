@@ -1,5 +1,4 @@
 // imports
-
 var express = require("express"),
     app = express();
     path = require('path'),
@@ -12,7 +11,6 @@ var express = require("express"),
 
 
 // express configuration
-
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-apikey");
@@ -24,17 +22,14 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
-
 // app routes
 app.use(apiBasepath + "/users", users)
-
 app.use(apiBasepath + "/interests", interests)
-
 app.use(apiBasepath + "/ratings", ratings)
 
 
 app.get("/", function(req, res) {
-  res.send("Root directory of users service")
+  res.send("Root directory of the users service")
 })
 
 // Start server in port 3001

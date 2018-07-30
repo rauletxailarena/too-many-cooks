@@ -6,6 +6,7 @@ var profile_form_helper = require("./profile_form_helper.js")
 var navbar_links = require("./navbar_links.js")
 var create_event_button = require("./create_event_button.js")
 var manage_events = require("./manage_events.js")
+var search_events_button = require("./search_events_button.js")
 
 var UI = function(){
   this.sign_up_button = new sign_up_button()
@@ -13,6 +14,7 @@ var UI = function(){
   this.update_profile_button = new update_profile_button()
   this.navbar_links = new navbar_links()
   this.create_event_button = new create_event_button()
+  this.search_events_button = new search_events_button()
 }
 
 

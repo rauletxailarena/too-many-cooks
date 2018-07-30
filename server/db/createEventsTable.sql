@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS locations;
 
 
+-- Create the different tables
 CREATE TABLE locations (
   id SERIAL PRIMARY KEY,
   latitude REAL,
@@ -61,7 +62,7 @@ CREATE TABLE event_assistants (
   unique (event_id, user_id)
 );
 
--- events seeding:
+-- Dummy data insetion:
 
 -- locations:
 INSERT INTO locations (latitude, longitude, postcode, address, city, description)
@@ -79,13 +80,13 @@ VALUES (55.945743, -3.233609, 'EH19 3RQ', '455 South Gyle Crescent', 'Edinburgh'
 
 -- events
 INSERT INTO events (host_id, location_id, title, description, type, start_date, slots)
-VALUES (1, 1, 'Learn how to cook tapas with Pancho', 'A workshop in which our Spanish chef will introduce you into the tapas world', 1, '13/06/2018', 10);
+VALUES (1, 1, 'Learn how to cook tapas with Pancho', 'A workshop in which our Spanish chef will introduce you into the tapas world', 1, '30/06/2018', 10);
 
 INSERT INTO events (host_id, location_id, title, description, type, start_date, slots)
-VALUES (2, 2, 'Night out with beer tasting', 'We will learn how to appreciate different beer ingredients and flavours', 1, '13/06/2011', 10);
+VALUES (2, 2, 'Night out with beer tasting', 'We will learn how to appreciate different beer ingredients and flavours', 1, '11/12/2011', 10);
 
 INSERT INTO events (host_id, location_id, title, description, type, start_date, slots)
-VALUES (3, 3, 'Steak feast masterclass', 'Rare, medium-rare or medium-well. However you like your steaks, this is your event', 1, '13/06/2016', 6);
+VALUES (3, 3, 'Steak feast masterclass', 'Rare, medium-rare or medium-well. However you like your steaks, this is your event', 1, '24/03/2016', 6);
 
 INSERT INTO events (host_id, location_id, title, description, type, start_date)
 VALUES (4, 4, 'Cupcake competition', 'Come with your cupcakes ready to take part in this fun competition', 1, '13/06/2020');

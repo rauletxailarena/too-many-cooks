@@ -1,5 +1,4 @@
 // imports
-
 var express = require("express"),
     app = express();
     path = require('path'),
@@ -10,8 +9,8 @@ var express = require("express"),
     apiBasepath = "/api/v1"
 
 
-// express configuration
 
+// express configuration
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-apikey");

@@ -14,8 +14,7 @@ var sign_up_button = function() {
   button.addEventListener("click", function() {
 
 
-    // Grab all the fields
-
+    // Grab all the fields to create a new user
     var email = document.getElementById('sign-up-input-email').value
     var password = document.getElementById('sign-up-input-password').value
     var username = document.getElementById('sign-up-input-username').value
@@ -35,15 +34,13 @@ var sign_up_button = function() {
     var user_type_radio_buttons = {user_type_chef, user_type_student, user_type_both}
 
 
-    // Check no field is left emtpy
-
+    // Check that no field is left emtpy
     if (field_helper.is_field_empty(email) || field_helper.is_field_empty(password) || field_helper.is_field_empty(username)) {
       document.getElementById("sign-up-hint").innerHTML = "Make sure you don't leave any empty fields"
       return
     }
 
     // Check both passwords match
-
     if (!(field_helper.same_content("sign-up-input-password", "sign-up-input-password-2"))) {
       document.getElementById("sign-up-hint").innerHTML = "The passwords don't match"
       return
@@ -51,7 +48,6 @@ var sign_up_button = function() {
 
 
     // Create user to store
-
     var user_to_register = {
       "user_name" : username,
       "first_name" : null,
@@ -61,6 +57,7 @@ var sign_up_button = function() {
       "date_of_birth": null
     }
 
+    // Call to request helper to execute the POST request
     requestHelper.postRequestWithHeaders(test_url,
       [{"header": "x-apikey", "value": "gb49ALfq8gH2c32TxO7QB90Hr8aLjoqF"}, {"header": "Content-Type", "value": "application/json"}],
       JSON.stringify(user_to_register),
