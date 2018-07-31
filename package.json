@@ -8,7 +8,8 @@
     "start": "nodemon server/server.js",
     "build": "cd client && webpack -w",
     "users": "nodemon server/services/users_service.js",
-    "events": "nodemon server/services/events_service.js"
+    "events": "nodemon server/services/events_service.js",
+    "communications": "nodemon server/services/communications_service.js"
   },
   "author": "",
   "license": "ISC",
