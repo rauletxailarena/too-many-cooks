@@ -1,0 +1,217 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is my 'communications' microservice API. In here you can explore and play
+    around with the different operations provided by this API.
+  version: 1.0.0
+  title: Communications microservice
+  contact:
+    email: jraulruizgarcia@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:3003'
+basePath: /api/v1
+schemes:
+  - http
+  - https
+tags:
+  - name: communication
+    description: Communication instances that users can send and receive in order to transmit messages to other users
+  # - name: tag
+  #   description: >-
+  #     Object that defines specific tags that users can assign to events or use
+  #     as filters to search for specific types of events
+  # - name: location
+  #   description: >-
+  #     Object that holds information concerning to the location of a specific
+  #     event, such as its coordinates, address, postcode, etc.
+paths:
+
+
+
+  /communications:
+    get:
+      tags:
+        - communication
+      summary: Retrieves an array with all the communications currently in the database
+      operationId: getCommunications
+      produces:
+        - application/json
+      parameters:
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Communications_Array'
+          description: Successful operation
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input 
+      
+    post:
+      tags:
+        - communication
+      summary: >-
+        Adds a new communication to the database
+      operationId: postCommunication
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - in: body
+          name: body
+          description: Communication object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Communication'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  '/communications/{communication_id}':
+    get:
+      tags:
+        - communication
+      summary: Retrieves a single document containing one communication instance
+      operationId: getCommunicationById
+      produces:
+        - application/json
+      parameters:
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - name: communication_id
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Communication'
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+    post:
+      tags:
+        - communication
+      summary: >-
+        Adds a new communication to the database
+      operationId: postMessageToCommunication
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - in: body
+          name: body
+          description: Communication object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Communication'
+        - name: communication_id
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  '/communications/user/{user_id}':
+    get:
+      tags:
+        - communication
+      summary: Gets all the communications by an user
+      operationId: getCommunicationsByUserId
+      produces:
+        - application/json
+      parameters:
+        - name: x-apikey
+          in: header
+          type: string
+          required: true
+        - name: user_id
+          in: path
+          required: true
+          type: number
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Communication'
+        '400':
+          description: Server error
+        '405':
+          description: Invalid input
+  
+          
+definitions:
+  Communications_Array:
+    type: array
+    items: 
+      $ref: '#/definitions/Communication'
+  Communication:
+    type: object 
+    properties:
+      _id: 
+        type: string
+        example: 3435a3b53de4678
+      participants: 
+        type: array 
+        items:
+          $ref: '#/definitions/Participant'
+      messages:
+        type: array 
+        items: 
+          $ref: '#/definitions/Message'
+  Participant:
+    type: object 
+    properties:
+      _id: 
+        type: string  
+        example: 34431d3dd432ea
+      user_id:
+        type: number 
+        example: 356
+  Message:
+    type: object 
+    properties:
+      _id: 
+        type: string  
+        example: 34431d3dd432ea
+      sender: 
+        type: number 
+        example: 456
+      content:
+        type: string
+        example: Hi! Will there be vegetarian options at your party?
+      timestamp:
+        type: string
+        format: date
+        example: 02/02/2014

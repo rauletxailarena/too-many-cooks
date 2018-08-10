@@ -22,6 +22,7 @@ function display_helper() {
     var create_event_page_wrapper = wrappers.push(document.getElementById("create-event-page-wrapper"));
     var manage_events_page_wrapper = wrappers.push(document.getElementById("manage-events-page-wrapper"));
     var search_events_page_wrapper = wrappers.push(document.getElementById("search-events-page-wrapper"));
+    var communications_page_wrapper = wrappers.push(document.getElementById("chats-page-wrapper"));
 
     wrappers.forEach(function(event) {
       if (event.id === div_id) {

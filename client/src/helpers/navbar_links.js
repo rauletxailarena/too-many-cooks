@@ -2,6 +2,7 @@ var display_helper = require("./display_helper")
 var tags_filler = require("./tags_filler.js")
 var manage_events_helper = require("./manage_events.js")
 var session_info = require('./session_info')
+var chats_helper = require('./chats_helper')
 
 var navbar_links = function() {
 
@@ -11,6 +12,8 @@ var navbar_links = function() {
   var search_event= document.getElementById("search-event-nav-link");
   var home = document.getElementById("home-nav-link")
   var too_many_cooks = document.getElementById("too-many-cooks-nav-link")
+  var communications = document.getElementById("communications-nav-link")
+  var gotosearchevents = document.getElementById("search-for-events-button")
 
   too_many_cooks.addEventListener("click", function() {
     console.log(session_info.user_id)
@@ -39,6 +42,14 @@ var navbar_links = function() {
   search_event.addEventListener("click", function() {
     display_helper.show_only("search-events-page-wrapper")
   });
+  communications.addEventListener("click", function() {
+    chats_helper.show_chats()
+    display_helper.show_only("chats-page-wrapper")
+  });
+
+  gotosearchevents.addEventListener("click", function() {
+    display_helper.show_only("search-events-page-wrapper")
+  })
 
 }
 

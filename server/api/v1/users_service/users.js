@@ -69,6 +69,13 @@ router.get("/:id", function(req, res) {
   })
 })
 
+// get list of users by id
+router.post("/list", function(req, res) {
+  req.body.user_ids.forEach(function(user_id) {
+    res.send("Hello")
+  })
+})
+
 
 // get user interests by user id
 router.get("/:id/interests", function(req, res) {

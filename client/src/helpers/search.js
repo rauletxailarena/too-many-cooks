@@ -8,10 +8,8 @@ var events = [
         "type": 1,
         "start_date": "2018-06-12T23:00:00.000Z",
         "slots": 10,
-        "tags": [
-          "Tapas", "Beer"
-        ],
-        "coordinates": {
+        "tags": ["Beer"],
+        "location_id": {
           "latitude": 55.943743,
           "longitude": -3.223609
         }
@@ -25,10 +23,8 @@ var events = [
         "type": 1,
         "start_date": "2011-06-12T23:00:00.000Z",
         "slots": 10,
-        "tags": [
-          "Beer"
-        ],
-        "coordinates": {
+        "tags": ["Beer"],
+        "location_id": {
           "latitude": 55.923743,
           "longitude": -3.221609
         }
@@ -42,10 +38,8 @@ var events = [
         "type": 1,
         "start_date": "2016-06-12T23:00:00.000Z",
         "slots": 6,
-        "tags": [
-          "Steak", "Beer"
-        ],
-        "coordinates": {
+        "tags": ["Beer", "Cupcake"],
+        "location_id": {
           "latitude": 55.911743,
           "longitude": -3.217609
         }
@@ -59,10 +53,8 @@ var events = [
         "type": 1,
         "start_date": "2020-06-12T23:00:00.000Z",
         "slots": null,
-        "tags": [
-          "Cupcakes"
-        ],
-        "coordinates": {
+        "tags": ["Cupcake"],
+        "location_id": {
           "latitude": 55.945743,
           "longitude": -3.233609
         }
@@ -103,28 +95,43 @@ var tagsMatch = function (target_tags, event_tags) {
   if ((target_tags === null) || (target_tags === undefined)) {
     return true;
   }
-    return event_tags.some(function (event) {
-        return target_tags.indexOf(event) >= 0;
+    return event_tags.some(function (tag) {
+        return target_tags.indexOf(tag) >= 0;
     });
 };
 
-var coordinatesMatch = function (event_coordinates, target_coordinates, radius) {
+var coordinatesMatch = function (event_location, target_coordinates, radius) {
   var variance = 0.0017 * radius
   if (
-    (event_coordinates.latitude <= target_coordinates.latitude + variance) &&
-    (event_coordinates.latitude >= target_coordinates.latitude - variance) &&
-    (event_coordinates.longitude <= target_coordinates.longitude + variance) &&
-    (event_coordinates.longitude >= target_coordinates.longitude - variance)
+    (event_location.latitude <= target_coordinates.latitude + variance) &&
+    (event_location.latitude >= target_coordinates.latitude - variance) &&
+    (event_location.longitude <= target_coordinates.longitude + variance) &&
+    (event_location.longitude >= target_coordinates.longitude - variance)
   ) {
     return true;
   }
 }
 
-var search = function(events, fromDateString, toDateString, tags, coordinates, radius) {
+var search = function( events, fromDateString, toDateString, tags, coordinates, radius) {
+  //debug info
+  console.log("Events:", events)
+  console.log("From date:", fromDateString)
+  console.log("to Date:", toDateString)
+  console.log("tags:", tags)
+  console.log("coordinates:", coordinates)
+  console.log("Radius:", radius)
   var events_found = []
   events.forEach(function(event) {
-    if ((dateMatch(fromDateString, toDateString, event.start_date) &&
-    tagsMatch(tags, event.tags)) && coordinatesMatch(event.coordinates, coordinates, radius)) {
+    //debug methods:
+    console.log("Event:", event)
+    console.log("dateMatch:", dateMatch(fromDateString, toDateString, event.start_date))
+    console.log("tagsMatch:", tagsMatch(tags, event.tags))
+    console.log("coordinatesMatch:", coordinatesMatch(event.location_id, coordinates, radius))
+
+
+    if ((dateMatch(fromDateString, toDateString, event.start_date)
+    && tagsMatch(tags, event.tags))
+    && coordinatesMatch(event.location_id, coordinates, radius)) {
       events_found.push(event)
     }
   })

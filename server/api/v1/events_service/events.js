@@ -176,6 +176,5 @@ router.put("/:event_id/users/:user_id", function (req, res) {
   })
 })
 
-
 // Exports
 module.exports = router

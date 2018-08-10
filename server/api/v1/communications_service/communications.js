@@ -20,6 +20,7 @@ router.get("/", function (req, res) {
       res.status(400)
        res.send(err)
     } else {
+      console.log("Trying to get all the chats")
       res.send(result)
     }
   })

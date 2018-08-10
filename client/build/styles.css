@@ -209,3 +209,7 @@ flex-direction: column;
   display: flex;
   flex: 5;
 }
+
+.form-control{
+  margin: 10px 10px;
+}
