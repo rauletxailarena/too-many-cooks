@@ -15,6 +15,7 @@ var UI = function(){
   this.navbar_links = new navbar_links()
   this.create_event_button = new create_event_button()
   this.search_events_button = new search_events_button()
+  display_helper.show_only("welcome-page-wrapper")
 }
 
 

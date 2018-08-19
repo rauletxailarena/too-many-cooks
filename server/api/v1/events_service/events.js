@@ -134,6 +134,7 @@ router.post("/:event_id/users/:user_id", function (req, res) {
         "status": 1
       }
       event_to_modify.assistants.push(newUser)
+      event_to_modify.slots -= 1
       models.event_model.findOneAndUpdate({"_id": event_id}, event_to_modify, function(err, event) {
         if (err) {
           res.status(400)
