@@ -44,7 +44,7 @@ router.get("/:communication_id", function(req,res) {
 // GET communication by user id
 router.get("/user/:user_id", function(req,res) {
   var user_id = req.params.user_id;
-  models.chat_model.
+  models.communications_model.
   find({"participants.user_id": user_id}).
   exec(function (err, result) {
     if (err) {
@@ -56,9 +56,9 @@ router.get("/user/:user_id", function(req,res) {
   })
 })
 
-// POST a new chat
+// POST a new communication
 router.post("/", function(req, res) {
-  var communication = new models.chat_model({
+  var communication = new models.communications_model({
     "id": new mongoose.Types.ObjectId(),
     "participants": [
       {
@@ -74,7 +74,7 @@ router.post("/", function(req, res) {
       {
         "_id": new mongoose.Types.ObjectId(),
         "sender": req.body.user_id,
-        "content": req.body.message,
+        "content": "This is the beginning of your conversation",
         "timestamp": new Date()
       }
     ]
@@ -85,7 +85,7 @@ router.post("/", function(req, res) {
 
 // POST message to existing chat
 router.post("/:communication_id", function(req, res) {
-  models.chat_model.
+  models.communications_model.
   findOne({"_id": req.params.communication_id}).
   exec(function (err, result) {
     if (err) {

@@ -17,7 +17,10 @@ var TagSchema = new mongoose.Schema({
 
 
 var EventSchema = new mongoose.Schema({
-  host_id: Number,
+  host_id: {
+    type: Number,
+    required:true
+  },
   location_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'location',
@@ -31,7 +34,8 @@ var EventSchema = new mongoose.Schema({
   type: {
     type: Number,
     min: 0,
-    max: 2
+    max: 2,
+    required: true
   },
   image_url: String,
   start_date: Date,

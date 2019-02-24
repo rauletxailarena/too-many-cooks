@@ -7,7 +7,7 @@ var mongoose = require("mongoose")
 
 router.use(function timeLog (req,res,next) {
   console.log("Time: " + Date.now())
-  console.log(req.body)
+  console.log(req.body) 
   next()
 })
 

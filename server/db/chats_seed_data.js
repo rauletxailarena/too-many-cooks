@@ -1,11 +1,8 @@
 var models = require('./mongoose_chat_connection')
 var delay = require('delay')
 
-models.chat_model.collection.drop()
-
-
-
-  models.chat_model.create({
+models.communications_model.collection.drop()
+  models.communications_model.create({
     "participants": [
       {
         user_id: 1

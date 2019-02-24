@@ -1,8 +1,8 @@
 var mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/chats')
+mongoose.connect('mongodb://localhost/communications')
 
-var ChatSchema = new mongoose.Schema({
+var CommunicationsSchema = new mongoose.Schema({
   participants: [
     {
       user_id: Number
@@ -19,5 +19,5 @@ var ChatSchema = new mongoose.Schema({
 
 
 module.exports = {
-  chat_model: mongoose.model('chat', ChatSchema),
+  communications_model: mongoose.model('chat', CommunicationsSchema),
 }

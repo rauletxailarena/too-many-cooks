@@ -45,6 +45,7 @@ var navbar_links = function() {
   communications.addEventListener("click", function() {
     chats_helper.show_chats()
     display_helper.show_only("chats-page-wrapper")
+    chats_helper.display_users()
   });
 
   gotosearchevents.addEventListener("click", function() {

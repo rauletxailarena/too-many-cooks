@@ -18,18 +18,7 @@ schemes:
 tags:
   - name: communication
     description: Communication instances that users can send and receive in order to transmit messages to other users
-  # - name: tag
-  #   description: >-
-  #     Object that defines specific tags that users can assign to events or use
-  #     as filters to search for specific types of events
-  # - name: location
-  #   description: >-
-  #     Object that holds information concerning to the location of a specific
-  #     event, such as its coordinates, address, postcode, etc.
 paths:
-
-
-
   /communications:
     get:
       tags:
